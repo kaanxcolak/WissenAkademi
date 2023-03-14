@@ -33,7 +33,7 @@ namespace CafeSoft.Forms
                 lstKatlarimiz.DataSource = null;
                 lstKatlarimiz.DataSource = DataContext.Katlar;
 
-                for(int i = 1; i <= kat.MasaSayisi; i++)
+                for (int i = 1; i <= kat.MasaSayisi; i++)
                 {
                     Masa masa = new Masa()
                     {
@@ -49,6 +49,28 @@ namespace CafeSoft.Forms
             {
                 MessageBox.Show($"Bir Hata Oluştu! {ex.Message}");
             }
+        }
+
+        private void KatlarForm_Load(object sender, EventArgs e)
+        {
+            lstKatlarimiz.DataSource = DataContext.Katlar;
+        }
+
+        private void btnGuncelle_Click(object sender, EventArgs e)
+        {
+            if (lstKatlarimiz.SelectedItem == null) return;
+            Kat? seciliKat = lstKatlarimiz.SelectedItem as Kat; //? değilde casting de yapılabilir
+            try
+            {
+                seciliKat.KatAd = txtKatIsmi.Text;
+                seciliKat.MasaSayisi = Convert.ToInt32(txtMasaSayisi.Text);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Bir hata oluştu! {ex.Message}");
+            }
+
         }
     }
 }
