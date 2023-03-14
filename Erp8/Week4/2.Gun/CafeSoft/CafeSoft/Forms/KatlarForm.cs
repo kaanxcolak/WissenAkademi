@@ -1,4 +1,5 @@
 ﻿using CafeSoft.Data;
+using CafeSoft.Helpers;
 using CafeSoft.Models;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,7 @@ namespace CafeSoft.Forms
                     };
                     DataContext.Masalar.Add(masa);
                 }
+                DataHelper.Save(DataContext);
 
             }
             catch (Exception ex)
