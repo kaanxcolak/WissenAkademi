@@ -64,12 +64,56 @@ namespace CafeSoft.Forms
             {
                 seciliKat.KatAd = txtKatIsmi.Text;
                 seciliKat.MasaSayisi = Convert.ToInt32(txtMasaSayisi.Text);
-
+                for (int i = 0; i < DataContext.Masalar.Count; i++)
+                {
+                    if (seciliKat.KatAd == DataContext.Masalar[i].BulunduguKat.KatAd)
+                    {
+                        DataContext.Masalar.Remove(DataContext.Masalar[i]);
+                        i--;
+                    }
+                }
+                for (int i = 1; i <= seciliKat.MasaSayisi; i++)
+                {
+                    Masa masa = new Masa
+                    {
+                        Ad = "Masa" + i.ToString(),
+                        BulunduguKat = seciliKat
+                    };
+                    DataContext.Masalar.Add(masa);
+                }
+                DataHelper.Save(DataContext);
+                lstKatlarimiz.DataSource = null;
+                lstKatlarimiz.DataSource = DataContext.Katlar;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Bir hata oluştu! {ex.Message}");
             }
+        }
+        private void lstKatlarimiz_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstKatlarimiz.SelectedItem == null) return;
+            Kat seciliKat = (Kat)lstKatlarimiz.SelectedItem;
+            txtKatIsmi.Text = seciliKat.KatAd;
+            txtMasaSayisi.Text = seciliKat.MasaSayisi.ToString();
+        }
+
+        private void silToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstKatlarimiz.SelectedItem == null) return;
+            Kat seciliKat = (Kat)lstKatlarimiz.SelectedItem;
+            DataContext.Katlar.Remove(seciliKat);
+            for(int i= 0; i < DataContext.Masalar.Count;)
+            {
+                DataContext.Masalar.Remove(DataContext.Masalar[i]);
+                i--;
+            }
+            DataHelper.Save(DataContext);
+            lstKatlarimiz.DataSource = null;
+            lstKatlarimiz.DataSource = DataContext.Katlar;
+        }
+        private void cmsSilIslemi_Opening(object sender, CancelEventArgs e)
+        {
 
         }
     }
