@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandevuSistemi", "RandevuSistemi\RandevuSistemi.csproj", "{24AA3CAB-E838-4046-91BC-0FCC8ACC60FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24AA3CAB-E838-4046-91BC-0FCC8ACC60FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24AA3CAB-E838-4046-91BC-0FCC8ACC60FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24AA3CAB-E838-4046-91BC-0FCC8ACC60FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24AA3CAB-E838-4046-91BC-0FCC8ACC60FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A81A1FD-F3F2-4563-ADD9-D7282FD2D1DC}
+	EndGlobalSection
+EndGlobal
