@@ -14,5 +14,10 @@ namespace CafeSoft
         {
 
         }
+
+        private void katToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
