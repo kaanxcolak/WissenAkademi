@@ -134,7 +134,7 @@
             // 
             btnAlanHesapla.Location = new Point(25, 127);
             btnAlanHesapla.Name = "btnAlanHesapla";
-            btnAlanHesapla.Size = new Size(225, 29);
+            btnAlanHesapla.Size = new Size(269, 29);
             btnAlanHesapla.TabIndex = 3;
             btnAlanHesapla.Text = "ALAN HESAPLA";
             btnAlanHesapla.UseVisualStyleBackColor = true;
@@ -143,7 +143,7 @@
             // 
             btnCevreHesapla.Location = new Point(25, 162);
             btnCevreHesapla.Name = "btnCevreHesapla";
-            btnCevreHesapla.Size = new Size(225, 29);
+            btnCevreHesapla.Size = new Size(269, 29);
             btnCevreHesapla.TabIndex = 3;
             btnCevreHesapla.Text = "ÇEVRE HESAPLA";
             btnCevreHesapla.UseVisualStyleBackColor = true;
