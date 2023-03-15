@@ -28,11 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             txtKategoriAd = new TextBox();
             btnGuncelle = new Button();
             btnKaydet = new Button();
             lstKategori = new ListBox();
+            cmsSil = new ContextMenuStrip(components);
+            silToolStripMenuItem = new ToolStripMenuItem();
+            cmsSil.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -59,6 +63,7 @@
             btnGuncelle.TabIndex = 2;
             btnGuncelle.Text = "Güncelle";
             btnGuncelle.UseVisualStyleBackColor = true;
+            btnGuncelle.Click += btnGuncelle_Click;
             // 
             // btnKaydet
             // 
@@ -78,6 +83,21 @@
             lstKategori.Name = "lstKategori";
             lstKategori.Size = new Size(239, 244);
             lstKategori.TabIndex = 3;
+            lstKategori.SelectedIndexChanged += lstKategori_SelectedIndexChanged;
+            // 
+            // cmsSil
+            // 
+            cmsSil.ImageScalingSize = new Size(20, 20);
+            cmsSil.Items.AddRange(new ToolStripItem[] { silToolStripMenuItem });
+            cmsSil.Name = "cmsSil";
+            cmsSil.Size = new Size(211, 56);
+            // 
+            // silToolStripMenuItem
+            // 
+            silToolStripMenuItem.Name = "silToolStripMenuItem";
+            silToolStripMenuItem.Size = new Size(210, 24);
+            silToolStripMenuItem.Text = "sil";
+            silToolStripMenuItem.Click += silToolStripMenuItem_Click;
             // 
             // KategorilerForm
             // 
@@ -91,6 +111,8 @@
             Controls.Add(label1);
             Name = "KategorilerForm";
             Text = "KategorilerForm";
+            Load += KategorilerForm_Load;
+            cmsSil.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -102,5 +124,7 @@
         private Button btnGuncelle;
         private Button btnKaydet;
         private ListBox lstKategori;
+        private ContextMenuStrip cmsSil;
+        private ToolStripMenuItem silToolStripMenuItem;
     }
 }
