@@ -10,7 +10,7 @@ namespace InterfaceOrnek_Odeme.Entities
 {
     internal class KapidaOdeme : Odeme, IOdemeAlabilir
     {
-        public string OdemeAlanPersonel { get; set; }
+        public string OdemeAlanPersonel { get; set; } = "Kaan Çolak";
         public bool PosMakinesiIstiyorMu { get; set; }
         public bool NakitMi { get; set; }
         public decimal NakitOdenenTutar { get; set; }   
@@ -20,7 +20,9 @@ namespace InterfaceOrnek_Odeme.Entities
 
         public string OdemeYap()
         {
-            KrediKartiMi = PosMakinesiIstiyorMu ? true : false; 
+            return $"Kapıda .ödemeniz {OdemeAlanPersonel} tarafından " +
+                $"{OdemeTarihi.ToString("dd:MM:yyyy)} {DateTime.Now.AddDays(1)} yapılacaktir";
+            //KrediKartiMi = PosMakinesiIstiyorMu ? true : false; 
             
         }
     }
