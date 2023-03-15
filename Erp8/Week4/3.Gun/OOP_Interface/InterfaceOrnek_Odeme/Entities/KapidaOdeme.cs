@@ -20,8 +20,10 @@ namespace InterfaceOrnek_Odeme.Entities
 
         public string OdemeYap()
         {
-            return $"Kapıda .ödemeniz {OdemeAlanPersonel} tarafından " +
-                $"{OdemeTarihi.ToString("dd:MM:yyyy)} {DateTime.Now.AddDays(1)} yapılacaktir";
+            return $"Bilgileriniz kaydedildi..." +
+                $"\nKapıda Ödemeniz {OdemeAlanPersonel} tarafından " +
+                $"{OdemeTarihi.ToString("dd:MM:yyyy")} " +
+                $"{DateTime.Now.AddDays(1)} tarihinde yapılacaktir...";
             //KrediKartiMi = PosMakinesiIstiyorMu ? true : false; 
             
         }
