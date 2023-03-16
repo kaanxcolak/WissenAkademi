@@ -77,6 +77,7 @@
             // 
             // lstKategori
             // 
+            lstKategori.ContextMenuStrip = cmsSil;
             lstKategori.FormattingEnabled = true;
             lstKategori.ItemHeight = 20;
             lstKategori.Location = new Point(304, 12);
@@ -90,12 +91,12 @@
             cmsSil.ImageScalingSize = new Size(20, 20);
             cmsSil.Items.AddRange(new ToolStripItem[] { silToolStripMenuItem });
             cmsSil.Name = "cmsSil";
-            cmsSil.Size = new Size(211, 56);
+            cmsSil.Size = new Size(93, 28);
             // 
             // silToolStripMenuItem
             // 
             silToolStripMenuItem.Name = "silToolStripMenuItem";
-            silToolStripMenuItem.Size = new Size(210, 24);
+            silToolStripMenuItem.Size = new Size(92, 24);
             silToolStripMenuItem.Text = "sil";
             silToolStripMenuItem.Click += silToolStripMenuItem_Click;
             // 

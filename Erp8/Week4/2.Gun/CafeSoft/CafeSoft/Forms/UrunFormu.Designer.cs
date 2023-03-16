@@ -106,6 +106,7 @@
             // 
             // lstUrunler
             // 
+            lstUrunler.ContextMenuStrip = cmsSil;
             lstUrunler.FormattingEnabled = true;
             lstUrunler.ItemHeight = 20;
             lstUrunler.Location = new Point(316, 12);

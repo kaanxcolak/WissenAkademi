@@ -73,9 +73,9 @@ namespace CafeSoft.Forms
             if (lstKategori.SelectedItem == null) return;
             Kategori seciliKategori = (Kategori)lstKategori.SelectedItem;
             DataContext.Kategoriler.Remove(seciliKategori);
-            for(int i = 0; i<DataContext.Urunler.Count;i++)
+            for (int i = 0; i < DataContext.Urunler.Count; i++)
             {
-                if(seciliKategori.Ad == DataContext.Urunler[i].Ad)
+                if (seciliKategori.Ad == DataContext.Urunler[i].Ad)
                 {
                     DataContext.Urunler.Remove(DataContext.Urunler[i]);
                     i--;

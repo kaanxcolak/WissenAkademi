@@ -81,6 +81,7 @@
             ürünToolStripMenuItem.Name = "ürünToolStripMenuItem";
             ürünToolStripMenuItem.Size = new Size(224, 26);
             ürünToolStripMenuItem.Text = "Ürün";
+            ürünToolStripMenuItem.Click += ürünToolStripMenuItem_Click;
             // 
             // Form1
             // 

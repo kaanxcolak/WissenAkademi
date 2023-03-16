@@ -38,10 +38,15 @@
             tableLayoutPanel4 = new TableLayoutPanel();
             tableLayoutPanel5 = new TableLayoutPanel();
             tableLayoutPanel6 = new TableLayoutPanel();
+            label1 = new Label();
+            label2 = new Label();
+            button1 = new Button();
+            button2 = new Button();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
             tableLayoutPanel4.SuspendLayout();
+            tableLayoutPanel6.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -63,7 +68,9 @@
             // 
             // flpKatlar
             // 
+            flpKatlar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flpKatlar.Dock = DockStyle.Fill;
+            flpKatlar.FlowDirection = FlowDirection.TopDown;
             flpKatlar.Location = new Point(3, 4);
             flpKatlar.Margin = new Padding(3, 4, 3, 4);
             flpKatlar.Name = "flpKatlar";
@@ -170,17 +177,61 @@
             // tableLayoutPanel6
             // 
             tableLayoutPanel6.ColumnCount = 2;
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.3493958F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.6506042F));
+            tableLayoutPanel6.Controls.Add(label1, 0, 0);
+            tableLayoutPanel6.Controls.Add(label2, 1, 0);
+            tableLayoutPanel6.Controls.Add(button1, 0, 1);
+            tableLayoutPanel6.Controls.Add(button2, 1, 1);
             tableLayoutPanel6.Dock = DockStyle.Fill;
             tableLayoutPanel6.Location = new Point(3, 310);
             tableLayoutPanel6.Margin = new Padding(3, 4, 3, 4);
             tableLayoutPanel6.Name = "tableLayoutPanel6";
             tableLayoutPanel6.RowCount = 2;
-            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 14.0468225F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 85.95318F));
             tableLayoutPanel6.Size = new Size(332, 299);
             tableLayoutPanel6.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Dock = DockStyle.Top;
+            label1.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Location = new Point(3, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(117, 24);
+            label1.TabIndex = 1;
+            label1.Text = "Toplam:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Dock = DockStyle.Top;
+            label2.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Location = new Point(126, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(203, 24);
+            label2.TabIndex = 2;
+            label2.Text = "0";
+            // 
+            // button1
+            // 
+            button1.Location = new Point(3, 45);
+            button1.Name = "button1";
+            button1.Size = new Size(117, 48);
+            button1.TabIndex = 3;
+            button1.Text = "Günlük Rapor";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(126, 45);
+            button2.Name = "button2";
+            button2.Size = new Size(114, 48);
+            button2.TabIndex = 4;
+            button2.Text = "Hesap Al";
+            button2.UseVisualStyleBackColor = true;
             // 
             // AnaSayfaForm
             // 
@@ -190,10 +241,13 @@
             Controls.Add(tableLayoutPanel1);
             Name = "AnaSayfaForm";
             Text = "AnaSayfaForm";
+            Load += AnaSayfaForm_Load;
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel6.ResumeLayout(false);
+            tableLayoutPanel6.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -209,5 +263,9 @@
         private FlowLayoutPanel flpMasalar;
         private FlowLayoutPanel flpKategoriler;
         private FlowLayoutPanel flpUrunler;
+        private Label label1;
+        private Label label2;
+        private Button button1;
+        private Button button2;
     }
 }

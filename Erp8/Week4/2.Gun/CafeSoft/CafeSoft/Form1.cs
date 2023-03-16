@@ -60,12 +60,32 @@ namespace CafeSoft
             if (_anaSayfaForm != null) _anaSayfaForm.Close();
             if (_urunForm != null) _urunForm.Close();
             if (_katlarForm != null) _katlarForm.Close();
-            if(_kategorilerForm == null || _kategorilerForm.IsDisposed)
+            if (_kategorilerForm == null || _kategorilerForm.IsDisposed)
             {
                 _kategorilerForm = new KategorilerForm();
                 _kategorilerForm.MdiParent = this;
                 _kategorilerForm.Text = "KategorilerForm";
-            } 
+                _kategorilerForm.WindowState = FormWindowState.Maximized;
+                _kategorilerForm.DataContext = _dataContext;
+                _kategorilerForm.Show();
+            }
+        }
+
+        private void ürünToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_anaSayfaForm != null) _anaSayfaForm.Close();
+            if (_katlarForm != null) _katlarForm.Close();
+            if (_kategorilerForm != null) _kategorilerForm.Close();
+            if(_urunForm == null || _urunForm.IsDisposed)
+            {
+                _urunForm = new UrunFormu();
+                _urunForm.MdiParent = this;
+                _urunForm.Text = "UrunFormu";
+                _urunForm.WindowState = FormWindowState.Maximized;
+                _urunForm.DataContext = _dataContext;
+                _urunForm.Show();
+            }
+
         }
     }
 }

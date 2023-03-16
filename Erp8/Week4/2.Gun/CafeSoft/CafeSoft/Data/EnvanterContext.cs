@@ -13,5 +13,6 @@ public class EnvanterContext
     public List<Masa> Masalar { get; set; } = new List<Masa>();
     public List<Kategori> Kategoriler { get; set;} = new List<Kategori>();
     public List<Urun> Urunler { get; set; } = new List<Urun>();
+    public List<Sepet> Sepetler { get; set; } = new List<Sepet>();
 
 }

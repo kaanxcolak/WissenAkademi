@@ -37,13 +37,12 @@ namespace CafeSoft.Forms
                 {
                     Masa masa = new Masa()
                     {
-                        Ad = "Masa" + i.ToString(),
-                        BulunduguKat = kat
+                        BulunduguKat = kat,
+                        Ad = "Masa" + i.ToString()
                     };
                     DataContext.Masalar.Add(masa);
                 }
                 DataHelper.Save(DataContext);
-
             }
             catch (Exception ex)
             {
@@ -103,7 +102,7 @@ namespace CafeSoft.Forms
             if (lstKatlarimiz.SelectedItem == null) return;
             Kat seciliKat = (Kat)lstKatlarimiz.SelectedItem;
             DataContext.Katlar.Remove(seciliKat);
-            for(int i= 0; i < DataContext.Masalar.Count;)
+            for (int i = 0; i < DataContext.Masalar.Count;i++)
             {
                 DataContext.Masalar.Remove(DataContext.Masalar[i]);
                 i--;
@@ -111,10 +110,6 @@ namespace CafeSoft.Forms
             DataHelper.Save(DataContext);
             lstKatlarimiz.DataSource = null;
             lstKatlarimiz.DataSource = DataContext.Katlar;
-        }
-        private void cmsSilIslemi_Opening(object sender, CancelEventArgs e)
-        {
-
         }
     }
 }

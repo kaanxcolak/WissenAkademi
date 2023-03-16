@@ -99,6 +99,7 @@
             // 
             // lstKatlarimiz
             // 
+            lstKatlarimiz.ContextMenuStrip = cmsSilIslemi;
             lstKatlarimiz.FormattingEnabled = true;
             lstKatlarimiz.ItemHeight = 20;
             lstKatlarimiz.Location = new Point(291, 16);
@@ -113,13 +114,12 @@
             cmsSilIslemi.ImageScalingSize = new Size(20, 20);
             cmsSilIslemi.Items.AddRange(new ToolStripItem[] { silToolStripMenuItem });
             cmsSilIslemi.Name = "cmsSilIslemi";
-            cmsSilIslemi.Size = new Size(211, 56);
-            cmsSilIslemi.Opening += cmsSilIslemi_Opening;
+            cmsSilIslemi.Size = new Size(95, 28);
             // 
             // silToolStripMenuItem
             // 
             silToolStripMenuItem.Name = "silToolStripMenuItem";
-            silToolStripMenuItem.Size = new Size(210, 24);
+            silToolStripMenuItem.Size = new Size(94, 24);
             silToolStripMenuItem.Text = "Sil";
             silToolStripMenuItem.Click += silToolStripMenuItem_Click;
             // 

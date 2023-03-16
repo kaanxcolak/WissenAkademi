@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CafeSoft.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,5 +17,15 @@ namespace CafeSoft.Forms
         {
             InitializeComponent();
         }
+        private Masa _masa;
+        private Button _clickedKategori;
+        private Button _clickedKat;
+        Urun eklenecekUrun;
+
+        private void AnaSayfaForm_Load(object sender, EventArgs e)
+        {
+
+        }
+        //GunlukRapor rapor = new GunlukRapor();
     }
 }
