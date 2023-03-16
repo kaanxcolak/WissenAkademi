@@ -133,6 +133,7 @@
             flpUrunler.Name = "flpUrunler";
             flpUrunler.Size = new Size(432, 320);
             flpUrunler.TabIndex = 2;
+            flpUrunler.Paint += flpUrunler_Paint;
             // 
             // tableLayoutPanel4
             // 

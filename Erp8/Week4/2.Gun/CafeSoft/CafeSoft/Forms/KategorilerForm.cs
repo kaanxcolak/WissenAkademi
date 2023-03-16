@@ -31,7 +31,6 @@ namespace CafeSoft.Forms
                 lstKategori.DataSource = null;
                 lstKategori.DataSource = DataContext.Kategoriler;
                 DataHelper.Save(DataContext);
-
             }
             catch (Exception ex)
             {

@@ -21,5 +21,10 @@ namespace CafeSoft.Forms
         {
 
         }
+
+        private void flpUrunler_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
