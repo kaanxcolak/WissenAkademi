@@ -16,15 +16,5 @@ namespace CafeSoft.Forms
         {
             InitializeComponent();
         }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void flpUrunler_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }

@@ -74,6 +74,7 @@
             kategoriToolStripMenuItem.Name = "kategoriToolStripMenuItem";
             kategoriToolStripMenuItem.Size = new Size(224, 26);
             kategoriToolStripMenuItem.Text = "Kategori";
+            kategoriToolStripMenuItem.Click += kategoriToolStripMenuItem_Click;
             // 
             // ürünToolStripMenuItem
             // 
@@ -92,6 +93,7 @@
             Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
