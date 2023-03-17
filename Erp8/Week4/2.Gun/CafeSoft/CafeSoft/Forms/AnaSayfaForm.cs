@@ -30,8 +30,6 @@ public partial class AnaSayfaForm : Form
     private EnvanterContext DataContext { get; set; }
     private void AnaSayfaForm_Load(object sender, EventArgs e)
     {
-        if (_clickedKat != null)
-        {
             foreach (var item in DataContext.Katlar)
             {
                 Button btn = new Button();
@@ -43,9 +41,7 @@ public partial class AnaSayfaForm : Form
                 lblToplam.Visible = false;
                 btnHesapAl.Visible = false;
             }
-        }
-
-
+        
     }
     private void KatButon_Click(object? sender, EventArgs e)
     {
