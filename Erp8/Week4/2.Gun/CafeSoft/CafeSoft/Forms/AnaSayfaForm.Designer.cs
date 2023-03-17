@@ -80,7 +80,6 @@
             flpKatlar.Name = "flpKatlar";
             flpKatlar.Size = new Size(216, 621);
             flpKatlar.TabIndex = 0;
-            flpKatlar.Paint += flpKatlar_Paint;
             // 
             // tableLayoutPanel2
             // 
@@ -255,6 +254,7 @@
             btnGunlukRapor.TabIndex = 3;
             btnGunlukRapor.Text = "Günlük Rapor";
             btnGunlukRapor.UseVisualStyleBackColor = true;
+            btnGunlukRapor.Click += btnGunlukRapor_Click;
             // 
             // btnHesapAl
             // 
@@ -264,6 +264,7 @@
             btnHesapAl.TabIndex = 4;
             btnHesapAl.Text = "Hesap Al";
             btnHesapAl.UseVisualStyleBackColor = true;
+            btnHesapAl.Click += btnHesapAl_Click;
             // 
             // AnaSayfaForm
             // 
