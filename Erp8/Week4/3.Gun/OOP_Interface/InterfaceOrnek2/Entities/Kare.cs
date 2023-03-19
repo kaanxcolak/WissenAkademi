@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace InterfaceOrnek2.Entities
 {
-    internal class Kare : Sekil, IAlanaSahiptir, ICevreyeSahiptir,IKosegenli
+    internal class Kare : Sekil, IAlanaSahiptir, ICevreyeSahiptir,
+        IKosegenli
     {
+
         #region Properties
         public int Kenar { get; set; }
 
-
         #endregion
+
         public double AlanHesapla()
         {
             try
@@ -23,9 +25,9 @@ namespace InterfaceOrnek2.Entities
             }
             catch (Exception)
             {
+
                 throw;
             }
-        
         }
 
         public double CevreHesapla()
@@ -35,7 +37,7 @@ namespace InterfaceOrnek2.Entities
 
         public double KosegenHesapla()
         {
-            return 0; //TODO: formülüne bakılacak
+            return 0; //TODO: formülüne bakıp ekleme yapılacak
         }
     }
 }

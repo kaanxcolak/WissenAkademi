@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace InterfaceOrnek2.Entities
 {
-    internal class Dikdortgen:Sekil,IAlanaSahiptir,ICevreyeSahiptir,IKosegenli
+    internal class Dikdortgen : Sekil, ICevreyeSahiptir,
+        IAlanaSahiptir, IKosegenli
     {
         #region Properties
         public int KisaKenar { get; set; }
@@ -16,20 +17,18 @@ namespace InterfaceOrnek2.Entities
 
         public double AlanHesapla()
         {
-            throw new NotImplementedException();
+            return UzunKenar * KisaKenar;
         }
-
         public double CevreHesapla()
         {
-            return 2*(KisaKenar + UzunKenar);
+            return 2 * (KisaKenar + UzunKenar);
         }
 
         public double KosegenHesapla()
         {
-            return 0;
+            return 0; //TODO: formülüne bakılacaktır
         }
 
         #endregion
-
     }
 }

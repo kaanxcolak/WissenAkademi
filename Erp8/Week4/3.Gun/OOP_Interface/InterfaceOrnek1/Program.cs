@@ -20,11 +20,11 @@ using InterfaceOrnek1;
 //islemListesi.Add(toplamaYoneticisi);
 
 
-//ToplamaIslemYoneticisi t = new ToplamaIslemYoneticisi();
+ToplamaIslemYoneticisi t = new ToplamaIslemYoneticisi();
 CarpmaIslemYoneticisi c = new CarpmaIslemYoneticisi();
 
 
-List<IislemİsmiYazdirir> islemler = new List<IislemİsmiYazdirir>
+List<IislemIsmiYazdirir> islemler = new List<IislemIsmiYazdirir>
 { c};
 
 foreach (var item in islemler)

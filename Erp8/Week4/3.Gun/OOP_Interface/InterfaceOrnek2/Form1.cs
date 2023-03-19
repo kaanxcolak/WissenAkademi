@@ -9,61 +9,76 @@ namespace InterfaceOrnek2
             InitializeComponent();
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             grpBoxIslemler.Enabled = false;
             radioBtnDikdortgen.Checked = false;
             radioBtnKare.Checked = true;
-            // radiolar biri mutlaka secilil geldiği için 
-            //secili gelen şekle göre groupbox'ı ayarladık
+            // radiolar biri mutlaka seçili geldiði için
+            // seçili gelen þekle göre groupboxý ayarladýk. 
             grpBoxIslemler.Enabled = true;
+
             lblKenar2.Visible = false;
-            txtKenar2.Enabled = false;
-            lblKenar1.Text = "Kare İsim";
+            txtKenar2.Visible = false;
+            lblKenar1.Text = "Kare Ýsim:";
 
             btnAlanHesapla.Click += new EventHandler(Hesapla);
-            btnCevreHesapla.Click += new EventHandler(Hesapla);
-        }//form load metot bitti
+            // btnAlanHesapla.Click += new EventHandler(btnAlanHesapla_Click);
 
-        private void Hesapla(object sender, EventArgs e) //
+            // btnCevreHesapla.Click += new EventHandler(Hesapla);
+            btnCevreHesapla.Click += new EventHandler(btnCevreHesapla_Click);
+        } // form load metot bitti
+
+        private void Hesapla(object sender, EventArgs e) // týklanan OBJE
         {
             //sender kim?
             string islemAdi = "";
-            if (((Button)sender).Name.Contains("cevre"))//casting işlemiyle ona sen Button sun edmiş oluruz
+            if (((Button)sender).Name.Contains("Cevre"))
+            {
                 islemAdi = "cevre";
-            if (((Button)sender).Name == "btnAlanHesala")
+            }
+            if (((Button)sender).Name == "btnAlanHesapla")
+            {
                 islemAdi = "alan";
-            //kimin alanı ya da cevresi?
+            }
+
+            // kimin alaný ya da kimin çevresi?
             if (radioBtnDikdortgen.Checked)
             {
+                if (string.IsNullOrEmpty(txtKenar1.Text)
+               || string.IsNullOrEmpty(txtKenar2.Text))
+                {
+                    MessageBox.Show("DÝKDÖRTGEN ÝÇÝN LÜTFEN BÝLGÝLERÝ EKSÝKSÝZ GÝR!");
+                    return;
+                }
                 Dikdortgen d = new Dikdortgen()
                 {
                     SekilAdi = txtSekilAdi.Text,
                     KisaKenar = Convert.ToInt32(txtKenar1.Text),
                     UzunKenar = Convert.ToInt32(txtKenar2.Text),
                 };
+
+
                 double sonuc = 0;
                 switch (islemAdi)
                 {
                     case "cevre":
-                        //MessageBox.Show(d.CevreHesapla().ToString());
                         sonuc = d.CevreHesapla();
                         break;
                     case "alan":
-                        //MessageBox.Show(d.AlanHesapla().ToString());
                         sonuc = d.AlanHesapla();
                         break;
                 }
-                MessageBox.Show($"{d.SekilAdi} adlı şeklin {islemAdi} hesaplandı = {sonuc}");
-
+                MessageBox.Show($"{d.SekilAdi} adlý þeklin {islemAdi} hesaplandý = {sonuc}");
             }
             else if (radioBtnKare.Checked)
             {
+                if (string.IsNullOrEmpty(txtKenar1.Text)
+               )
+                {
+                    MessageBox.Show("KARE ÝÇÝN LÜTFEN BÝLGÝLERÝ EKSÝKSÝZ GÝR!");
+                    return;
+                }
                 Kare k = new Kare()
                 {
                     SekilAdi = txtSekilAdi.Text,
@@ -79,9 +94,8 @@ namespace InterfaceOrnek2
                         sonuc = k.AlanHesapla();
                         break;
                 }
-                MessageBox.Show($"{k.SekilAdi} adlı şeklin {islemAdi} hesaplandı = {sonuc}");
+                MessageBox.Show($"{k.SekilAdi} adlý þeklin {islemAdi} hesaplandý = {sonuc}");
             }
-            Temizle();
         }
         private void Temizle()
         {
@@ -90,29 +104,119 @@ namespace InterfaceOrnek2
                 if (item is TextBox)
                     ((TextBox)item).Clear();
             }
-            //grpBoxIslemler.Enabled = false;
+            grpBoxIslemler.Enabled = false;
         }
 
         private void radioBtnDikdortgen_CheckedChanged(object sender, EventArgs e)
         {
+            Temizle();
+            grpBoxIslemler.Enabled = true;
+
             lblKenar1.Visible = true;
             txtKenar1.Visible = true;
 
             lblKenar2.Visible = true;
             txtKenar2.Visible = true;
 
-            lblKenar1.Text = "Dikdörtgen Ýsim:";
+            lblKenar1.Text = "Kýsa Kenar:";
+            lblKenar2.Text = "Uzun Kenar:";
+            lblSekilAdi.Text = "Dikdörtgen Ýsim:";
+
         }
 
         private void radioBtnKare_CheckedChanged(object sender, EventArgs e)
         {
+            Temizle();
+            grpBoxIslemler.Enabled = true;
             lblKenar1.Visible = true;
             txtKenar1.Visible = true;
 
             lblKenar2.Visible = false;
             txtKenar2.Visible = false;
 
-            lblKenar1.Text = "Kare Ýsim:";
+            lblKenar1.Text = "Kenar:";
+            lblSekilAdi.Text = "Kare Ýsim:";
+        }
+
+        private void btnAlanHesapla_Click(object sender, EventArgs e)
+        {
+            // kimin alaný ya da kimin çevresi?
+            if (radioBtnDikdortgen.Checked)
+            {
+                if (string.IsNullOrEmpty(txtKenar1.Text)
+               || string.IsNullOrEmpty(txtKenar2.Text))
+                {
+                    MessageBox.Show("DÝKDÖRTGEN ÝÇÝN LÜTFEN BÝLGÝLERÝ EKSÝKSÝZ GÝR!");
+                    return;
+                }
+                Dikdortgen d = new Dikdortgen()
+                {
+                    SekilAdi = txtSekilAdi.Text,
+                    KisaKenar = Convert.ToInt32(txtKenar1.Text),
+                    UzunKenar = Convert.ToInt32(txtKenar2.Text),
+                };
+
+                double sonuc = d.AlanHesapla();
+
+                MessageBox.Show($"{d.SekilAdi} adlý þeklin ALANI hesaplandý = {sonuc}");
+            }
+            else if (radioBtnKare.Checked)
+            {
+                if (string.IsNullOrEmpty(txtKenar1.Text)
+               )
+                {
+                    MessageBox.Show("KARE ÝÇÝN LÜTFEN BÝLGÝLERÝ EKSÝKSÝZ GÝR!");
+                    return;
+                }
+                Kare k = new Kare()
+                {
+                    SekilAdi = txtSekilAdi.Text,
+                    Kenar = Convert.ToInt32(txtKenar1.Text)
+                };
+                double sonuc = k.AlanHesapla();
+                MessageBox.Show($"{k.SekilAdi} adlý þeklin ALANI hesaplandý = {sonuc}");
+            }
+        }
+
+        private void btnCevreHesapla_Click(object sender, EventArgs e)
+        {
+            // kimin alaný ya da kimin çevresi?
+            if (radioBtnDikdortgen.Checked)
+            {
+                if (string.IsNullOrEmpty(txtKenar1.Text)
+               || string.IsNullOrEmpty(txtKenar2.Text))
+                {
+                    MessageBox.Show("DÝKDÖRTGEN ÝÇÝN LÜTFEN BÝLGÝLERÝ EKSÝKSÝZ GÝR!");
+                    return;
+                }
+                Dikdortgen d = new Dikdortgen()
+                {
+                    SekilAdi = txtSekilAdi.Text,
+                    KisaKenar = Convert.ToInt32(txtKenar1.Text),
+                    UzunKenar = Convert.ToInt32(txtKenar2.Text),
+                };
+
+                double sonuc = d.CevreHesapla();
+
+                MessageBox.Show($"{d.SekilAdi} adlý þeklin ÇEVRE hesaplandý = {sonuc}");
+            }
+            else if (radioBtnKare.Checked)
+            {
+                if (string.IsNullOrEmpty(txtKenar1.Text)
+               )
+                {
+                    MessageBox.Show("KARE ÝÇÝN LÜTFEN BÝLGÝLERÝ EKSÝKSÝZ GÝR!");
+                    return;
+                }
+                Kare k = new Kare()
+                {
+                    SekilAdi = txtSekilAdi.Text,
+                    Kenar = Convert.ToInt32(txtKenar1.Text)
+                };
+                double sonuc = k.CevreHesapla();
+                MessageBox.Show($"{k.SekilAdi} adlý þeklin ÇEVRE hesaplandý = {sonuc}");
+            }
+
         }
     }
 }

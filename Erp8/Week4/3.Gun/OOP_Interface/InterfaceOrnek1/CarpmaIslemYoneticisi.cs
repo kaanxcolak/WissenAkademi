@@ -1,11 +1,21 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-
-
-internal class CarpmaIslemYoneticisi
+namespace InterfaceOrnek1
 {
-    internal void IslemSonucunuYazdir()
+    internal class CarpmaIslemYoneticisi : Islem, IislemYap
     {
-        throw new NotImplementedException();
+        public CarpmaIslemYoneticisi()
+        {
+            IslemTuru = IslemTurleri.Carpma;
+        }
+
+        public void IslemSonucunuYazdir()
+        {
+            Console.WriteLine("30 ile 20'yi çarptım sonucu = " + 600);
+        }
     }
 }
