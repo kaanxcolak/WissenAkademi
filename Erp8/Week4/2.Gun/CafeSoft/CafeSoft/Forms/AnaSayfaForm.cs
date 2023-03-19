@@ -19,7 +19,7 @@ public partial class AnaSayfaForm : Form
     {
         InitializeComponent();
     }
-    private Kat _seciliKat;
+    //private EnvanterContext _envanterContext;
     private Masa _seciliMasa;
     private Button _clickedKategori;
     private Button _clickedKat;
@@ -30,18 +30,19 @@ public partial class AnaSayfaForm : Form
     private EnvanterContext DataContext { get; set; }
     private void AnaSayfaForm_Load(object sender, EventArgs e)
     {
-            foreach (var item in DataContext.Katlar)
-            {
-                Button btn = new Button();
-                btn.Text = item.KatAd;
-                btn.Size = new Size(100, 50);
-                btn.Click += KatButon_Click;
-                flpKatlar.Controls.Add(btn);
-                label1.Visible = false;
-                lblToplam.Visible = false;
-                btnHesapAl.Visible = false;
-            }
-        
+        DataContext = DataHelper.Load();
+
+        foreach (var item in DataContext.Katlar)
+        {
+            Button btn = new Button();
+            btn.Text = item.KatAd;
+            btn.Size = new Size(130, 70);
+            btn.Click += KatButon_Click;
+            flpKatlar.Controls.Add(btn);
+            label1.Visible = false;
+            lblToplam.Visible = false;
+            btnHesapAl.Visible = false;
+        }
     }
     private void KatButon_Click(object? sender, EventArgs e)
     {
@@ -62,7 +63,7 @@ public partial class AnaSayfaForm : Form
                 Button btnMasa = new Button();
                 btnMasa.Name = item.Id.ToString();
                 btnMasa.Text = item.Ad;
-                btnMasa.Size = new Size(50, 50);
+                btnMasa.Size = new Size(70, 70);
                 btnMasa.Click += MasaButon_Click;
                 if (item.DoluMu)
                     btnMasa.BackColor = Color.Red;
@@ -334,5 +335,10 @@ public partial class AnaSayfaForm : Form
         rapor.GunlukRaporOlustur();
         MessageBox.Show("Raporunuz Masaüstünde GünlükRapor.txt olarak oluşturuldu.");
         rapor.SatılanUrunler.Clear();
+    }
+
+    private void flpLabels_Paint(object sender, PaintEventArgs e)
+    {
+
     }
 }

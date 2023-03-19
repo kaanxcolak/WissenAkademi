@@ -65,7 +65,7 @@ namespace CafeSoft.Forms
         {
             if (lstUrunler.SelectedItem == null) return;
             Urun urun = (Urun)lstUrunler.SelectedItem;
-            txtUrunAd.Text = urun.ToString();
+            txtUrunAd.Text = urun.Ad.ToString();
             txtUrunFiyat.Text = urun.Fiyat.ToString();
             cmbUrunKategori.SelectedItem = DataContext.Kategoriler.Find(x => x.Ad == urun.Kategori.Ad);
             if (urun.Fotograf != null)

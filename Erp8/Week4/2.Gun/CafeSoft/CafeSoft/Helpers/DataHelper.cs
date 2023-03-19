@@ -10,7 +10,8 @@ namespace CafeSoft.Helpers;
 
 public class DataHelper
 {
-    private static readonly string Path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Datas.json"; 
+    private static readonly string Path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+        + "\\Datas.json"; 
 
     public static void Save(EnvanterContext context)
     {

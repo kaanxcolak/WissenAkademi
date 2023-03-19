@@ -65,21 +65,21 @@
             // katToolStripMenuItem
             // 
             katToolStripMenuItem.Name = "katToolStripMenuItem";
-            katToolStripMenuItem.Size = new Size(224, 26);
+            katToolStripMenuItem.Size = new Size(149, 26);
             katToolStripMenuItem.Text = "Kat ";
             katToolStripMenuItem.Click += katToolStripMenuItem_Click;
             // 
             // kategoriToolStripMenuItem
             // 
             kategoriToolStripMenuItem.Name = "kategoriToolStripMenuItem";
-            kategoriToolStripMenuItem.Size = new Size(224, 26);
+            kategoriToolStripMenuItem.Size = new Size(149, 26);
             kategoriToolStripMenuItem.Text = "Kategori";
             kategoriToolStripMenuItem.Click += kategoriToolStripMenuItem_Click;
             // 
             // ürünToolStripMenuItem
             // 
             ürünToolStripMenuItem.Name = "ürünToolStripMenuItem";
-            ürünToolStripMenuItem.Size = new Size(224, 26);
+            ürünToolStripMenuItem.Size = new Size(149, 26);
             ürünToolStripMenuItem.Text = "Ürün";
             ürünToolStripMenuItem.Click += ürünToolStripMenuItem_Click;
             // 
@@ -93,7 +93,6 @@
             MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
-            Text = "Form1";
             Load += Form1_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();

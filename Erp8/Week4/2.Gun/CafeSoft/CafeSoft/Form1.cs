@@ -32,7 +32,7 @@ namespace CafeSoft
             {
                 _anaSayfaForm = new AnaSayfaForm();
                 _anaSayfaForm.MdiParent = this;
-                _anaSayfaForm.Text = "AnaSayfaForm";
+                _anaSayfaForm.Text = "AnaSayfa Form";
                 _anaSayfaForm.WindowState = FormWindowState.Maximized;
                 _anaSayfaForm.DataContext = _dataContext;
                 _anaSayfaForm.Show();
@@ -76,7 +76,7 @@ namespace CafeSoft
             if (_anaSayfaForm != null) _anaSayfaForm.Close();
             if (_katlarForm != null) _katlarForm.Close();
             if (_kategorilerForm != null) _kategorilerForm.Close();
-            if(_urunForm == null || _urunForm.IsDisposed)
+            if (_urunForm == null || _urunForm.IsDisposed)
             {
                 _urunForm = new UrunFormu();
                 _urunForm.MdiParent = this;
