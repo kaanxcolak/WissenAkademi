@@ -48,6 +48,7 @@
             label4 = new Label();
             label3 = new Label();
             label2 = new Label();
+            txtKartNo = new TextBox();
             grpBoxOdemeSekli.SuspendLayout();
             grpBoxOdemeTutar.SuspendLayout();
             groupBoxKrediKarti.SuspendLayout();
@@ -136,6 +137,7 @@
             // 
             // groupBoxKrediKarti
             // 
+            groupBoxKrediKarti.Controls.Add(txtKartNo);
             groupBoxKrediKarti.Controls.Add(txtKartSahibi);
             groupBoxKrediKarti.Controls.Add(button2);
             groupBoxKrediKarti.Controls.Add(btnKrediKartiOde);
@@ -223,7 +225,7 @@
             // 
             // maskedtxtKartNo
             // 
-            maskedtxtKartNo.Location = new Point(150, 77);
+            maskedtxtKartNo.Location = new Point(28, 306);
             maskedtxtKartNo.Mask = "0000 0000 0000 0000";
             maskedtxtKartNo.Name = "maskedtxtKartNo";
             maskedtxtKartNo.Size = new Size(433, 38);
@@ -255,6 +257,13 @@
             label2.Size = new Size(129, 31);
             label2.TabIndex = 0;
             label2.Text = "Kart Sahibi:";
+            // 
+            // txtKartNo
+            // 
+            txtKartNo.Location = new Point(150, 77);
+            txtKartNo.Name = "txtKartNo";
+            txtKartNo.Size = new Size(433, 38);
+            txtKartNo.TabIndex = 13;
             // 
             // Form1
             // 
@@ -301,5 +310,6 @@
         private Label label4;
         private Label label3;
         private Label label2;
+        private TextBox txtKartNo;
     }
 }
