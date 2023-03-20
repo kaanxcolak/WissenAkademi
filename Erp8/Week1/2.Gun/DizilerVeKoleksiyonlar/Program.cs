@@ -1,4 +1,4 @@
-﻿// dizi aynı tipteki değişkenleri ya da verileri bir arada tutabildiğimiz bir yapıdır.
+﻿ // dizi aynı tipteki değişkenleri ya da verileri bir arada tutabildiğimiz bir yapıdır.
 
 
 using System.Collections;
