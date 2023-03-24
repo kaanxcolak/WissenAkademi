@@ -134,6 +134,7 @@
             btnKayitOl.TabIndex = 2;
             btnKayitOl.Text = "KAYIT OL";
             btnKayitOl.UseVisualStyleBackColor = false;
+            btnKayitOl.Click += btnKayitOl_Click;
             // 
             // btnGirisYap
             // 
