@@ -1,10 +1,20 @@
-namespace AkbilYonetimiUI
+﻿namespace AkbilYonetimiUI
 {
-    public partial class Form1 : Form
+    public partial class FrmGiris : Form
     {
-        public Form1()
+        public FrmGiris()
         {
             InitializeComponent();
+        }
+
+        private void btnKayitOl_Click(object sender, EventArgs e)
+        {
+            //Bu formu gizleyeceğiz
+            //Kayıt Ol formunu açacağız 
+            this.Hide();
+            FrmKayitOl frm = new FrmKayitOl();
+            frm.Show();
+
         }
     }
 }
