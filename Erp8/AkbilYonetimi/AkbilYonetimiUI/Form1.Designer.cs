@@ -72,6 +72,7 @@
             txtSifre.Name = "txtSifre";
             txtSifre.Size = new Size(237, 34);
             txtSifre.TabIndex = 1;
+            txtSifre.KeyPress += txtSifre_KeyPress;
             // 
             // checkBoxHatirla
             // 
@@ -83,6 +84,7 @@
             checkBoxHatirla.TabIndex = 2;
             checkBoxHatirla.Text = "Beni Hatırla";
             checkBoxHatirla.UseVisualStyleBackColor = true;
+            checkBoxHatirla.CheckedChanged += checkBoxHatirla_CheckedChanged;
             // 
             // btnKayitOl
             // 
@@ -124,6 +126,7 @@
             Controls.Add(label1);
             Name = "FrmGiris";
             Text = "HOŞGELDİNİZ...";
+            Load += FrmGiris_Load;
             ResumeLayout(false);
             PerformLayout();
         }

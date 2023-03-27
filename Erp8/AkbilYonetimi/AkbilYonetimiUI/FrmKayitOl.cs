@@ -44,17 +44,17 @@ namespace AkbilYonetimiUI
                 baglanti.Open();
 
                 SqlDataReader okuyucu = komut.ExecuteReader(); //çalıştır
-                if(okuyucu.HasRows) //satır var mı?
+                if (okuyucu.HasRows) //satır var mı?
                 {
                     while (okuyucu.Read()) //verileri okurken x işlemleri yap
                     {
-                        MessageBox.Show($"Bu email zaten  sisteme kayıtlıdır !","UYARI", MessageBoxButtons.OK,MessageBoxIcon.Stop);
+                        MessageBox.Show($"Bu email zaten  sisteme kayıtlıdır !", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                         return;
                     }
                 }
                 baglanti.Close();
-;                //2) Emaili daha önce kayıtlı değilse KAYIT OLACAK
-                if(string.IsNullOrEmpty(txtIsim.Text) || string.IsNullOrEmpty(txtSoyisim.Text)
+                ;                //2) Emaili daha önce kayıtlı değilse KAYIT OLACAK
+                if (string.IsNullOrEmpty(txtIsim.Text) || string.IsNullOrEmpty(txtSoyisim.Text)
                     || string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtSifre.Text))
                 {
                     MessageBox.Show($"Bilgileri eksiksiz giriniz!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Stop);
@@ -62,18 +62,18 @@ namespace AkbilYonetimiUI
                 }
                 string insertSQL = $"insert into Kullanicilar (EklenmeTarihi,Email,Parola,Ad,Soyad,DogumTarihi) values" +
                     $" ('{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}','{txtEmail.Text.Trim()}','{txtSifre.Text.Trim()}','{txtIsim.Text.Trim()}','{txtSoyisim.Text.Trim()}','{dtpDogumTarihi.Value.ToString("yyyyMMdd")}')";
-                SqlCommand eklemeKomut = new SqlCommand(insertSQL,baglanti);
+                SqlCommand eklemeKomut = new SqlCommand(insertSQL, baglanti);
                 baglanti.Open();
                 int rowsEffected = eklemeKomut.ExecuteNonQuery(); //insert update delete için kullanılır.
-                if(rowsEffected > 0)
+                if (rowsEffected > 0)
                 {
                     MessageBox.Show($"KAYIT EKLENDİ!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
+                    GirisFormunaGit();
                 }
                 else
                 {
-                    MessageBox.Show($"KAYIT EKLENEMEDİ!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Stop );
-                    
+                    MessageBox.Show($"KAYIT EKLENEMEDİ!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+
                 }
                 baglanti.Close();
                 //Temizlik gerekli
@@ -83,6 +83,29 @@ namespace AkbilYonetimiUI
                 //ex log.txt'ye yazılacak(loglama)
                 MessageBox.Show($"Beklenmedik bir hata oluştu! Lütfen tekrar deneyiniz !");
             }
+        }
+
+        private void GirisFormunaGit()
+        {
+            FrmGiris frmG = new FrmGiris();
+            frmG.Email = txtEmail.Text.Trim();
+            this.Hide();
+            frmG.Show();
+        }
+
+        private void FrmKayitOl_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            GirisFormunaGit();
+        }
+
+        private void btnGirisYap_Click(object sender, EventArgs e)
+        {
+            GirisFormunaGit();
+        }
+
+        private void dtpDogumTarihi_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

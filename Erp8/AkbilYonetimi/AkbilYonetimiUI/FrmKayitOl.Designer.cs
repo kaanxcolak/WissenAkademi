@@ -146,6 +146,7 @@
             btnGirisYap.TabIndex = 2;
             btnGirisYap.Text = "GİRİŞ YAP";
             btnGirisYap.UseVisualStyleBackColor = false;
+            btnGirisYap.Click += btnGirisYap_Click;
             // 
             // dtpDogumTarihi
             // 
@@ -153,6 +154,7 @@
             dtpDogumTarihi.Name = "dtpDogumTarihi";
             dtpDogumTarihi.Size = new Size(218, 27);
             dtpDogumTarihi.TabIndex = 3;
+            dtpDogumTarihi.ValueChanged += dtpDogumTarihi_ValueChanged;
             // 
             // FrmKayitOl
             // 
@@ -173,6 +175,7 @@
             Controls.Add(label1);
             Name = "FrmKayitOl";
             Text = "Kayıt Ol Formu";
+            FormClosed += FrmKayitOl_FormClosed;
             Load += FrmKayitOl_Load;
             ResumeLayout(false);
             PerformLayout();
