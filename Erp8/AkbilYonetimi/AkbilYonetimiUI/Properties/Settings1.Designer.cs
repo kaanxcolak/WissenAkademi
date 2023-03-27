@@ -58,5 +58,17 @@ namespace AkbilYonetimiUI.Properties {
                 this["KullaniciSifre"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int KullaniciId {
+            get {
+                return ((int)(this["KullaniciId"]));
+            }
+            set {
+                this["KullaniciId"] = value;
+            }
+        }
     }
 }

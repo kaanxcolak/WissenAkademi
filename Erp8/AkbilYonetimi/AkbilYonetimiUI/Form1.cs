@@ -79,16 +79,18 @@ namespace AkbilYonetimiUI
                     while (okuyucu.Read())
                     {
                         MessageBox.Show($"Hoşgeldiniz {okuyucu["Ad"]} {okuyucu["Soyad"]}");
+                        Properties.Settings1.Default.KullaniciId = (int)okuyucu["Ad"];
                     }
                     baglanti.Close();
                 }
                 //eğer email ve şifre doğruysa hoşgeldiniz yazacak ve anasayfa formuna yönlendirilecek
                 //.eğer beni Hatırla'yı tıkladıysa ?? Bilgileri hatırlanacak...
                 if (checkBoxHatirla.Checked)
-                {
+                {                    
                     Properties.Settings1.Default.BeniHatirla = true;
                     Properties.Settings1.Default.KullaniciEmail = txtEmail.Text.Trim();
                     Properties.Settings1.Default.KullaniciSifre = txtSifre.Text.Trim();
+             
                     Properties.Settings1.Default.Save();
 
                 }

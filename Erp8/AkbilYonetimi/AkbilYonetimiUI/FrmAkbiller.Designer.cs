@@ -32,15 +32,15 @@
             anaSayfaToolStripMenuItem = new ToolStripMenuItem();
             çIKIŞYAPToolStripMenuItem = new ToolStripMenuItem();
             groupBox1 = new GroupBox();
-            label1 = new Label();
-            label2 = new Label();
-            maskedTextBoxAkbilNo = new MaskedTextBox();
-            cmbBoxAkbilTipleri = new ComboBox();
             btnKaydet = new Button();
-            dataGridView1 = new DataGridView();
+            cmbBoxAkbilTipleri = new ComboBox();
+            maskedTextBoxAkbilNo = new MaskedTextBox();
+            label2 = new Label();
+            label1 = new Label();
+            dataGridViewAkbiller = new DataGridView();
             menuStrip1.SuspendLayout();
             groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewAkbiller).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -79,40 +79,6 @@
             groupBox1.Size = new Size(536, 152);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
-            groupBox1.Text = "groupBox1";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 43);
-            label1.Name = "label1";
-            label1.Size = new Size(70, 20);
-            label1.TabIndex = 0;
-            label1.Text = "Akbil No:";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 77);
-            label2.Name = "label2";
-            label2.Size = new Size(75, 20);
-            label2.TabIndex = 0;
-            label2.Text = "Akbil Tipi:";
-            // 
-            // maskedTextBoxAkbilNo
-            // 
-            maskedTextBoxAkbilNo.Location = new Point(93, 41);
-            maskedTextBoxAkbilNo.Name = "maskedTextBoxAkbilNo";
-            maskedTextBoxAkbilNo.Size = new Size(268, 27);
-            maskedTextBoxAkbilNo.TabIndex = 1;
-            // 
-            // cmbBoxAkbilTipleri
-            // 
-            cmbBoxAkbilTipleri.FormattingEnabled = true;
-            cmbBoxAkbilTipleri.Location = new Point(93, 74);
-            cmbBoxAkbilTipleri.Name = "cmbBoxAkbilTipleri";
-            cmbBoxAkbilTipleri.Size = new Size(268, 28);
-            cmbBoxAkbilTipleri.TabIndex = 2;
             // 
             // btnKaydet
             // 
@@ -124,33 +90,74 @@
             btnKaydet.TabIndex = 3;
             btnKaydet.Text = "YENİ AKBİL KAYDET";
             btnKaydet.UseVisualStyleBackColor = false;
+            btnKaydet.Click += btnKaydet_Click;
             // 
-            // dataGridView1
+            // cmbBoxAkbilTipleri
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(36, 213);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(536, 189);
-            dataGridView1.TabIndex = 4;
+            cmbBoxAkbilTipleri.FormattingEnabled = true;
+            cmbBoxAkbilTipleri.Items.AddRange(new object[] { "Öğrenci Akbili", "Tam Akbili", "Anne Kartı", "65+ Kartı", "Öğretmen Kart" });
+            cmbBoxAkbilTipleri.Location = new Point(93, 74);
+            cmbBoxAkbilTipleri.Name = "cmbBoxAkbilTipleri";
+            cmbBoxAkbilTipleri.Size = new Size(268, 28);
+            cmbBoxAkbilTipleri.TabIndex = 2;
+            // 
+            // maskedTextBoxAkbilNo
+            // 
+            maskedTextBoxAkbilNo.Location = new Point(93, 41);
+            maskedTextBoxAkbilNo.Mask = "0000 0000 0000 0000";
+            maskedTextBoxAkbilNo.Name = "maskedTextBoxAkbilNo";
+            maskedTextBoxAkbilNo.Size = new Size(268, 27);
+            maskedTextBoxAkbilNo.TabIndex = 1;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 77);
+            label2.Name = "label2";
+            label2.Size = new Size(75, 20);
+            label2.TabIndex = 0;
+            label2.Text = "Akbil Tipi:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 43);
+            label1.Name = "label1";
+            label1.Size = new Size(70, 20);
+            label1.TabIndex = 0;
+            label1.Text = "Akbil No:";
+            // 
+            // dataGridViewAkbiller
+            // 
+            dataGridViewAkbiller.AllowUserToAddRows = false;
+            dataGridViewAkbiller.AllowUserToDeleteRows = false;
+            dataGridViewAkbiller.AllowUserToOrderColumns = true;
+            dataGridViewAkbiller.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewAkbiller.Location = new Point(36, 223);
+            dataGridViewAkbiller.Name = "dataGridViewAkbiller";
+            dataGridViewAkbiller.ReadOnly = true;
+            dataGridViewAkbiller.RowHeadersWidth = 51;
+            dataGridViewAkbiller.RowTemplate.Height = 29;
+            dataGridViewAkbiller.Size = new Size(536, 189);
+            dataGridViewAkbiller.TabIndex = 4;
             // 
             // FrmAkbiller
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(622, 448);
-            Controls.Add(dataGridView1);
+            Controls.Add(dataGridViewAkbiller);
             Controls.Add(groupBox1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "FrmAkbiller";
             Text = "FrmAkbiller";
+            Load += FrmAkbiller_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewAkbiller).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -166,6 +173,6 @@
         private MaskedTextBox maskedTextBoxAkbilNo;
         private Label label2;
         private Label label1;
-        private DataGridView dataGridView1;
+        private DataGridView dataGridViewAkbiller;
     }
 }

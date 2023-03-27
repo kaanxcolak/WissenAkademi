@@ -28,8 +28,8 @@ namespace AkbilYonetimiUI
         private void btnAkbil_Click(object sender, EventArgs e)
         {
             this.Hide();
-            //FrmAkbiller frmAkbiller = new FrmAkbiller();
-            //FrmAkbiller.Show();
+            FrmAkbiller frmAkbiller = new FrmAkbiller();
+            frmAkbiller.Show();
         }
     }
 }
