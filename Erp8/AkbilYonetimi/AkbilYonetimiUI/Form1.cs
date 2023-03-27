@@ -79,20 +79,28 @@ namespace AkbilYonetimiUI
                     while (okuyucu.Read())
                     {
                         MessageBox.Show($"Hoşgeldiniz {okuyucu["Ad"]} {okuyucu["Soyad"]}");
-                        Properties.Settings1.Default.KullaniciId = (int)okuyucu["Ad"];
+                        Properties.Settings1.Default.KullaniciId = (int)okuyucu["Id"];
                     }
                     baglanti.Close();
                 }
                 //eğer email ve şifre doğruysa hoşgeldiniz yazacak ve anasayfa formuna yönlendirilecek
                 //.eğer beni Hatırla'yı tıkladıysa ?? Bilgileri hatırlanacak...
                 if (checkBoxHatirla.Checked)
-                {                    
+                {
                     Properties.Settings1.Default.BeniHatirla = true;
                     Properties.Settings1.Default.KullaniciEmail = txtEmail.Text.Trim();
                     Properties.Settings1.Default.KullaniciSifre = txtSifre.Text.Trim();
-             
+
                     Properties.Settings1.Default.Save();
 
+                }
+                else
+                {
+                    Properties.Settings1.Default.BeniHatirla = false;
+                    Properties.Settings1.Default.KullaniciEmail = "";
+                    Properties.Settings1.Default.KullaniciSifre = string.Empty;
+
+                    Properties.Settings1.Default.Save();
                 }
                 //Bu form gizlenecek
                 //Ana sayfa formu açılacak!!!
@@ -110,21 +118,9 @@ namespace AkbilYonetimiUI
             }
         }
 
-        private void checkBoxHatirla_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxHatirla.Checked)
-            {
-                Properties.Settings1.Default.BeniHatirla = true;
-            }
-            else
-            {
-                Properties.Settings1.Default.BeniHatirla = false;
-            }
-        }
-
         private void txtSifre_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if(e.KeyChar == Convert.ToChar(Keys.Enter)) //basilan tuş enter ise giriş yapacak
+            if (e.KeyChar == Convert.ToChar(Keys.Enter)) //basilan tuş enter ise giriş yapacak
             {
                 GirisYap();
             }

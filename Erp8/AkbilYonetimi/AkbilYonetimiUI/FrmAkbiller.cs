@@ -31,7 +31,7 @@ namespace AkbilYonetimiUI
                     return;
                 }
 
-                
+
                 SqlConnection baglanti = new SqlConnection(baglantiCumlesi);
                 SqlCommand komut = new SqlCommand();
                 komut.Connection = baglanti;
@@ -75,6 +75,7 @@ namespace AkbilYonetimiUI
         {
             cmbBoxAkbilTipleri.Text = "Akbil tipi seçiniz...";
             cmbBoxAkbilTipleri.SelectedIndex = -1;
+            dataGridViewAkbiller.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             DataGridViewiDoldur();
         }
@@ -83,7 +84,7 @@ namespace AkbilYonetimiUI
         {
             try
             {
-                SqlConnection connection = new SqlConnection();
+                SqlConnection connection = new SqlConnection(baglantiCumlesi);
                 SqlCommand command = new SqlCommand();
                 command.Connection = connection;
                 command.CommandText = $"select * from Akbiller where AkbilSahibiId = @sahibi";
@@ -96,7 +97,7 @@ namespace AkbilYonetimiUI
                 //SqlDataAdapter adp = new SqlDataAdapter(command);
 
                 SqlDataAdapter adp = new SqlDataAdapter();
-               
+
                 adp.SelectCommand = command;
                 DataTable dt = new DataTable();
                 connection.Open();
@@ -108,10 +109,6 @@ namespace AkbilYonetimiUI
                 dataGridViewAkbiller.Columns["AkbilSahibiId"].Visible = false;
                 dataGridViewAkbiller.Columns["VizelendigiTarih"].HeaderText = "Vizelendiği Tarih";
                 dataGridViewAkbiller.Columns["VizelendigiTarih"].Width = 200;
-
-
-
-
             }
             catch (Exception hata)
             {

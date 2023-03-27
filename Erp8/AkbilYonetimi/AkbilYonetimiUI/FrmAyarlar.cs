@@ -61,12 +61,9 @@ namespace AkbilYonetimiUI
                             txtAd.Text = okuyucu["Ad"].ToString();
                             txtSoyad.Text = okuyucu["Soyad"].ToString();
                             dtpDogumTarihi.Value = Convert.ToDateTime(okuyucu["DogumTarihi"]);
-
                         }
                     }
                     baglanti.Close();
-
-
                 }
             }
             catch (Exception hata)
@@ -75,7 +72,6 @@ namespace AkbilYonetimiUI
                 MessageBox.Show($"Beklenmedik hata oluştu!" + hata.Message);
             }
         }
-
         private void btnGuncelle_Click(object sender, EventArgs e)
         {
             try
@@ -89,7 +85,6 @@ namespace AkbilYonetimiUI
                     sorgu += $" ,Parola = '{txtSifre.Text.Trim()}'";
                 }
 
-
                 sorgu += $"where Email = '{txtEmail.Text.Trim()}'";
                 SqlCommand komut = new SqlCommand(sorgu, baglanti);                   
                 baglanti.Open();
@@ -101,8 +96,7 @@ namespace AkbilYonetimiUI
                 else
                 {
                     MessageBox.Show("Bilgiler Güncellenemedi! ");
-                }
-            
+                }            
             }
             catch (Exception hata)
             {
