@@ -106,6 +106,7 @@
             btnGirisYap.TabIndex = 3;
             btnGirisYap.Text = "GİRİŞ YAP";
             btnGirisYap.UseVisualStyleBackColor = false;
+            btnGirisYap.Click += btnGirisYap_Click;
             // 
             // FrmGiris
             // 
