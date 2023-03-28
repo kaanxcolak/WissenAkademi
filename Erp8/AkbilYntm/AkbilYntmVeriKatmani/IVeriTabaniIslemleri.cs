@@ -22,7 +22,7 @@ namespace AkbilYntmVeriKatmani
         int KomutIsle(string eklemeyadaGuncellemeCumlesi); //executenonquery
 
         string VeriEklemeCumlesiOlustur(string tabloAdi, Dictionary<string,object> kolonlar);
-        string VeriGuncellemeCumlesiOlustur(string tabloAdi, Hashtable kolonlar);
+        string VeriGuncellemeCumlesiOlustur(string tabloAdi, Hashtable kolonlar, string? kosullar = null);
 
         Hashtable VeriOku(string tabloAdi, string[] kolonlar, string? kosullar = null);
         void Deneme() //interface abstrac classa çok benzediyse 

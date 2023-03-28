@@ -1,15 +1,20 @@
-﻿using Microsoft.VisualBasic;
+﻿using AkbilYntmIsKatmani;
+using AkbilYntmVeriKatmani;
+using Microsoft.VisualBasic;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace AkbilYonetimiUI
 {
     public partial class FrmGiris : Form
     {
         public string Email { get; set; }   //kayıt ol formunda kayıt olan kullanıcının emaili buraya gelsin
+        IVeriTabaniIslemleri veriTabaniIslemleri = new SqlVeriTabaniIslemleri();
         public FrmGiris()
         {
             InitializeComponent();
         }
+
         private void FrmGiris_Load(object sender, EventArgs e)
         {
             if (Email != null)
@@ -23,13 +28,7 @@ namespace AkbilYonetimiUI
             btnGirisYap.TabIndex = 4;
             btnKayitOl.TabIndex = 5;
 
-            if (Properties.Settings1.Default.BeniHatirla)
-            {
-                txtEmail.Text = Properties.Settings1.Default.KullaniciEmail;
-                txtSifre.Text = Properties.Settings1.Default.KullaniciSifre;
-                checkBoxHatirla.Checked = true;
-
-            }
+            
         }
 
 
@@ -61,7 +60,31 @@ namespace AkbilYonetimiUI
                 }
                 //2)Girdiği email ve şifre veritabanında mevcut mu?
                 //select * from Kullanicilar where Email = '' and Sifre=''
-                //
+                string[] istedigimKolonlar = new string[] { "Id", "Ad", "Soyad" };
+                string kosullar = string.Empty;
+                StringBuilder sb = new StringBuilder();
+                sb.Append($"Email='{txtEmail.Text.Trim()}'");
+                sb.Append(" and ");
+                sb.Append($"Parola='{GenelIslemler.MD5Encryption(txtSifre.Text.Trim())}'");
+                kosullar = sb.ToString();
+
+                var sonuc = veriTabaniIslemleri.VeriOku("Kullanicilar", istedigimKolonlar, kosullar);
+
+                if (sonuc.Count==0)
+                {
+                    MessageBox.Show("Email ya da şifre yanlış! tekrar dene! ");
+                }
+                else
+                {
+                    GenelIslemler.GirisYapanKullaniciID = (int)sonuc["Id"];
+                    GenelIslemler.GirisYapanKullaniciAdSoyad = $"{sonuc["Ad"]} {sonuc["Soyad"]}";
+                    MessageBox.Show($"Hoşgeldiniz... {GenelIslemler.GirisYapanKullaniciAdSoyad}");
+
+                    //Beni hatırla yazılacak
+                    this.Hide();
+                    FrmAnasayfa frmanasayfa = new FrmAnasayfa();
+                    frmanasayfa.Show();
+                }
 
             }
             catch (Exception hata)

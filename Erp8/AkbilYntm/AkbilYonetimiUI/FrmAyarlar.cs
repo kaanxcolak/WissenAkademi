@@ -37,16 +37,7 @@ namespace AkbilYonetimiUI
                 //Kullanıcı bilgisini alabilmek için burada 2 yöntem kullanabiliriz.
                 //Static bir class açıp içinde static GirisYapmisKullaniciEmail propertysi kullanılabilir.
                 //2.Yöntem olarak properties settings içine kayıtlı email bilgisinden yararlanılabilir.
-                if (string.IsNullOrEmpty(Properties.Settings1.Default.KullaniciEmail))
-                {
-                    MessageBox.Show("Giriş yapmadan bu sayfaya ulaşamazsınız!");
-                    return;
-                    //Giriş formuna yönlendirilebilir.....showDialog()
-                }
-                else
-                {
-                   
-                }
+                
             }
             catch (Exception hata)
             {

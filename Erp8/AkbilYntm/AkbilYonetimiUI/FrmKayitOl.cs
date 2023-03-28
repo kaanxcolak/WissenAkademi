@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AkbilYntmIsKatmani;
+using AkbilYntmVeriKatmani;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +15,7 @@ namespace AkbilYonetimiUI
 {
     public partial class FrmKayitOl : Form
     {
+        IVeriTabaniIslemleri veriTabaniIslemleri = new SqlVeriTabaniIslemleri(GenelIslemler.SinifSQLBaglantiCumlesi);
         public FrmKayitOl()
         {
             InitializeComponent(); //İnşa Etmek
@@ -33,50 +36,45 @@ namespace AkbilYonetimiUI
         {
             try
             {
-                //1)Emailden kayıtlı biri zaten var mı?
-                string baglantiCumlesi = @"Server=DESKTOP-P4SDEGD;Database=AKBILDB;Trusted_Connection=True;";
-
-                SqlConnection baglanti = new SqlConnection(); //baglanti nesnesi
-                baglanti.ConnectionString = baglantiCumlesi; //nereye bağlanacak?
-                SqlCommand komut = new SqlCommand(); //komut nesnesi türettik
-                komut.Connection = baglanti; //komutun hangi bağlantıda çalışacağını atadık
-                komut.CommandText = $"select * from Kullanicilar (nolock) where Email = '{txtEmail.Text.Trim()}'"; //sql komutu
-                baglanti.Open();
-
-                SqlDataReader okuyucu = komut.ExecuteReader(); //çalıştır
-                if (okuyucu.HasRows) //satır var mı?
+                foreach (var item in Controls)
                 {
-                    while (okuyucu.Read()) //verileri okurken x işlemleri yap
+                    if (item is TextBox && string.IsNullOrEmpty(((TextBox) item).Text))
                     {
-                        MessageBox.Show($"Bu email zaten  sisteme kayıtlıdır !", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        MessageBox.Show("Zorunlu alanları doldurunuz! ");
                         return;
                     }
                 }
-                baglanti.Close();
-                ;                //2) Emaili daha önce kayıtlı değilse KAYIT OLACAK
-                if (string.IsNullOrEmpty(txtIsim.Text) || string.IsNullOrEmpty(txtSoyisim.Text)
-                    || string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtSifre.Text))
+                Dictionary<string,object> kolonlar = new Dictionary<string, object>();
+                kolonlar.Add("Ad",$"'{txtIsim.Text.Trim()}'");
+                kolonlar.Add("Soyad",$"'{txtSoyisim.Text.Trim()}'");
+                kolonlar.Add("Email",$"'{txtEmail.Text.Trim()}'");
+                kolonlar.Add("EklenmeTarihi",$"'{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'");
+                kolonlar.Add("DogumTarihi",$"'{dtpDogumTarihi.Value.ToString("yyyyMMdd")}'");
+                kolonlar.Add("Parola",$"'{GenelIslemler.MD5Encryption(txtSifre.Text.Trim())}'");
+                
+                string insertCumle = veriTabaniIslemleri.VeriEklemeCumlesiOlustur("Kullanicilar",kolonlar);
+                int sonuc = veriTabaniIslemleri.KomutIsle(insertCumle);
+                if (sonuc > 0)
                 {
-                    MessageBox.Show($"Bilgileri eksiksiz giriniz!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    return;
-                }
-                string insertSQL = $"insert into Kullanicilar (EklenmeTarihi,Email,Parola,Ad,Soyad,DogumTarihi) values" +
-                    $" ('{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}','{txtEmail.Text.Trim()}','{txtSifre.Text.Trim()}','{txtIsim.Text.Trim()}','{txtSoyisim.Text.Trim()}','{dtpDogumTarihi.Value.ToString("yyyyMMdd")}')";
-                SqlCommand eklemeKomut = new SqlCommand(insertSQL, baglanti);
-                baglanti.Open();
-                int rowsEffected = eklemeKomut.ExecuteNonQuery(); //insert update delete için kullanılır.
-                if (rowsEffected > 0)
-                {
-                    MessageBox.Show($"KAYIT EKLENDİ!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    GirisFormunaGit();
+                    MessageBox.Show("Kayıt oluşturuldu");
+                    DialogResult cevap= MessageBox.Show("giriş sayfasına yönlendirmemizi ister misin?", "SORU",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                    if (cevap==DialogResult.Yes)
+                    {
+                        FrmGiris frmg = new FrmGiris();
+                        frmg.Email = txtEmail.Text.Trim();
+
+                        foreach (Form item in Application.OpenForms)
+                        {
+                            item.Hide();
+                        }
+                        frmg.Show();
+                    }
+
                 }
                 else
                 {
-                    MessageBox.Show($"KAYIT EKLENEMEDİ!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-
+                    MessageBox.Show("Kayıt EKLENEMEDİ!");
                 }
-                baglanti.Close();
-                //Temizlik gerekli
             }
             catch (Exception ex)
             {
