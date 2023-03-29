@@ -42,7 +42,7 @@
             dataGridViewTalimatlar = new DataGridView();
             timerBekleyenTalimat = new System.Windows.Forms.Timer(components);
             contextMenuStrip1 = new ContextMenuStrip(components);
-            talimatiYükleToolStripMenuItem = new ToolStripMenuItem();
+            talimatiYukleToolStripMenuItem = new ToolStripMenuItem();
             talimatiIptalEtToolStripMenuItem = new ToolStripMenuItem();
             groupBoxYukleme = new GroupBox();
             menuStrip1.SuspendLayout();
@@ -113,7 +113,6 @@
             txtYuklenecekTutar.Name = "txtYuklenecekTutar";
             txtYuklenecekTutar.Size = new Size(280, 32);
             txtYuklenecekTutar.TabIndex = 4;
-            txtYuklenecekTutar.TextChanged += txtYuklenecekTutar_TextChanged;
             // 
             // label2
             // 
@@ -169,17 +168,17 @@
             // contextMenuStrip1
             // 
             contextMenuStrip1.ImageScalingSize = new Size(20, 20);
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { talimatiYükleToolStripMenuItem, talimatiIptalEtToolStripMenuItem });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { talimatiYukleToolStripMenuItem, talimatiIptalEtToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(215, 84);
-            contextMenuStrip1.Opening += contextMenuStrip1_Opening;
             // 
-            // talimatiYükleToolStripMenuItem
+            // talimatiYukleToolStripMenuItem
             // 
-            talimatiYükleToolStripMenuItem.Image = Properties.Resources.png_transparent_checkbox_computer_icons_green_tick_mark_text_trademark_logo;
-            talimatiYükleToolStripMenuItem.Name = "talimatiYükleToolStripMenuItem";
-            talimatiYükleToolStripMenuItem.Size = new Size(214, 26);
-            talimatiYükleToolStripMenuItem.Text = "Talimatı Yükle";
+            talimatiYukleToolStripMenuItem.Image = Properties.Resources.png_transparent_checkbox_computer_icons_green_tick_mark_text_trademark_logo;
+            talimatiYukleToolStripMenuItem.Name = "talimatiYukleToolStripMenuItem";
+            talimatiYukleToolStripMenuItem.Size = new Size(214, 26);
+            talimatiYukleToolStripMenuItem.Text = "Talimatı Yükle";
+            talimatiYukleToolStripMenuItem.Click += talimatiYukleToolStripMenuItem_Click;
             // 
             // talimatiIptalEtToolStripMenuItem
             // 
@@ -244,7 +243,7 @@
         private System.Windows.Forms.Timer timerBekleyenTalimat;
         private ContextMenuStrip contextMenuStrip1;
         private GroupBox groupBoxYukleme;
-        private ToolStripMenuItem talimatiYükleToolStripMenuItem;
+        private ToolStripMenuItem talimatiYukleToolStripMenuItem;
         private ToolStripMenuItem talimatiIptalEtToolStripMenuItem;
     }
 }

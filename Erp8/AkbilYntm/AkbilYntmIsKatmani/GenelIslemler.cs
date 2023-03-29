@@ -9,8 +9,7 @@ namespace AkbilYntmIsKatmani
 {
     public class GenelIslemler
     {
-        public static string SinifSQLBaglantiCumlesi { get; set; } = @"Server=DESKTOP-
-            P4SDEGD;Database=AKBILDB;Trusted_Connection=True;";
+        public static string SinifSQLBaglantiCumlesi { get; set; } = @"Server=DESKTOP-P4SDEGD;Database=AKBILDB;Trusted_Connection=True;";
         public static string EvSQLBaglantiCumlesi { get; set; } = "";
         public static int GirisYapanKullaniciID { get; set; }
         public static string GirisYapanKullaniciEmail { get; set; }

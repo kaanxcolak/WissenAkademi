@@ -1,6 +1,7 @@
 ﻿using AkbilYntmIsKatmani;
 using AkbilYntmVeriKatmani;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,24 +15,21 @@ namespace AkbilYonetimiUI
 {
     public partial class FrmTalimatlar : Form
     {
-        IVeriTabaniIslemleri veriTabaniIslemleri = new SQLVeriTabaniIslemleri(
-            GenelIslemler.SinifSQLBaglantiCumlesi);
+        IVeriTabaniIslemleri veriTabaniIslemleri = new SQLVeriTabaniIslemleri(GenelIslemler.SinifSQLBaglantiCumlesi);
         public FrmTalimatlar()
         {
             InitializeComponent();
         }
-
         private void FrmTalimatlar_Load(object sender, EventArgs e)
         {
-            //Comboboxa akbilleri getir
+            //Comboxa akbilleri getir
             ComboBoxaKullanicininAkbilleriniGetir();
-            //cmbBoxAkbiller.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbBoxAkbiller.SelectedIndex = -1;
-            cmbBoxAkbiller.Text = "Akbil Seçiniz...";
+            cmbBoxAkbiller.Text = "Akbil seçiniz...";
+            // cmbBoxAkbiller.DropDownStyle = ComboBoxStyle.DropDownList;
             groupBoxYukleme.Enabled = false;
 
             dataGridViewTalimatlar.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
             TalimatlariDataGrideGetir();
             dataGridViewTalimatlar.ContextMenuStrip = contextMenuStrip1;
 
@@ -39,14 +37,15 @@ namespace AkbilYonetimiUI
             BekleyenTalimatSayisiniGetir();
             timerBekleyenTalimat.Interval = 1000;
             timerBekleyenTalimat.Enabled = true;
+
         }
 
         private void BekleyenTalimatSayisiniGetir()
         {
             try
             {
-                lblBekleyenTalimat.Text = veriTabaniIslemleri.VeriGetir("KullanicininTalimatlari", kosullar: $"KullanicininId={GenelIslemler.GirisYapanKullaniciID}" +
-                    $"and YuklendiMi=0").Rows.Count.ToString();
+                lblBekleyenTalimat.Text = veriTabaniIslemleri.VeriGetir("KullanicininTalimatlari",
+                         kosullar: $"KullaniciId={GenelIslemler.GirisYapanKullaniciID} and YuklendiMi=0").Rows.Count.ToString();
             }
             catch (Exception hata)
             {
@@ -77,10 +76,6 @@ namespace AkbilYonetimiUI
                 dataGridViewTalimatlar.Columns["Akbil"].Width = 400;
 
                 //istediğiniz diğer kolonlara da ayarlama yapabilirsiniz.
-                foreach (DataGridViewColumn item in dataGridViewTalimatlar.Columns)
-                {
-                    item.Width = 200;
-                }
             }
             catch (Exception hata)
             {
@@ -95,17 +90,13 @@ namespace AkbilYonetimiUI
                 cmbBoxAkbiller.DataSource = veriTabaniIslemleri.VeriGetir("Akbiller",
                     kosullar: $"AkbilSahibiId={GenelIslemler.GirisYapanKullaniciID}");
                 cmbBoxAkbiller.DisplayMember = "AkbilNo";
-                cmbBoxAkbiller.ValueMember = "AkbilNo"; //Genellikle benzersiz bilgi atanır.
-                                                        //Örn:Primary Key kolonu
+                cmbBoxAkbiller.ValueMember = "AkbilNo"; //Genellikle benzersiz bilgi atanır. ÖRN :Primary key kolunu
+
             }
             catch (Exception hata)
             {
                 MessageBox.Show("Beklenmedik bir hata oluştu! " + hata.Message);
             }
-        }
-
-        private void txtYuklenecekTutar_TextChanged(object sender, EventArgs e)
-        {
 
         }
 
@@ -121,6 +112,8 @@ namespace AkbilYonetimiUI
                 txtYuklenecekTutar.Clear();
                 groupBoxYukleme.Enabled = false;
             }
+            BekleyenTalimatSayisiniGetir();
+            TalimatlariDataGrideGetir(checkBoxTumunuGoster.Checked);
         }
 
         private void btnTalimatKaydet_Click(object sender, EventArgs e)
@@ -129,7 +122,7 @@ namespace AkbilYonetimiUI
             {
                 if (cmbBoxAkbiller.SelectedIndex < 0)
                 {
-                    MessageBox.Show("Akbil seçmeden işlem yapamazsın");
+                    MessageBox.Show("Akbil seçmeden talimat kaydedilemez! ");
                     return;
                 }
                 if (string.IsNullOrEmpty(txtYuklenecekTutar.Text))
@@ -142,14 +135,16 @@ namespace AkbilYonetimiUI
                     MessageBox.Show("Yükleme miktarı girişi uygun formatta olmalıdır! ");
                     return;
                 }
+
                 Dictionary<string, object> kolonlar = new Dictionary<string, object>();
+
                 kolonlar.Add("EklenmeTarihi", $"'{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'");
                 kolonlar.Add("AkbilID", $"'{cmbBoxAkbiller.SelectedValue}'");
-                kolonlar.Add("YuklenecekTutar", tutar);
+                kolonlar.Add("YuklenecekTutar", txtYuklenecekTutar.Text.Trim().Replace(",", "."));
                 kolonlar.Add("YuklendiMi", "0");
                 kolonlar.Add("YuklenmeTarihi", "null");
-
-                string talimatinsert = veriTabaniIslemleri.VeriEklemeCumlesiOlustur("Talimatlar", kolonlar);
+                string talimatinsert = veriTabaniIslemleri.VeriEklemeCumlesiOlustur(
+                    "Talimatlar", kolonlar);
                 int sonuc = veriTabaniIslemleri.KomutIsle(talimatinsert);
                 if (sonuc > 0)
                 {
@@ -163,7 +158,7 @@ namespace AkbilYonetimiUI
                 }
                 else
                 {
-
+                    MessageBox.Show("Talimat kaydedilemedi !");
                 }
 
             }
@@ -193,17 +188,12 @@ namespace AkbilYonetimiUI
 
             foreach (Form item in Application.OpenForms)
             {
-                if (item.Name != "Form1")
+                if (item.Name != "FrmGiris")
                 {
                     item.Hide();
                 }
             }
-            Application.OpenForms["Form1"].Show();
-        }
-
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
-
+            Application.OpenForms["FrmGiris"].Show();
         }
 
         private void timerBekleyenTalimat_Tick(object sender, EventArgs e)
@@ -230,25 +220,73 @@ namespace AkbilYonetimiUI
                 int sayac = 0;
                 foreach (DataGridViewRow item in dataGridViewTalimatlar.SelectedRows)
                 {
-                    //yüklenmiş bir talimat iptal edilemez/ silinemez
+                    //Yüklenmiş bir talimat iptal edilemez/silinemez.
                     if ((bool)item.Cells["YuklendiMi"].Value)
                     {
-                        MessageBox.Show($"DİKKAT! {item.Cells["Akbil"]} nolu akbilin {item.Cells["Yüklenecek Tutar"]} liralık yüklemesi yapılmıştır. " +
-                            $"YÜKLENEN TALİMAT İPTAL EDİLEMEZ/SİLİNEMEZ \nİŞLEMLERİNNİZE devam etmek için tamama basınız.");
+                        MessageBox.Show($"DİKKAT! {item.Cells["Akbil"].Value} akbilin {item.Cells["Yüklenecek Tutar"].Value} liralık yüklemesi yapılmıştır. YÜKLENEN TALİMAT İPTAL EDİLEMEZ/SİLİNEMEZ! \nİşlemlerinize devam etmek için tamama basınız.");
                         continue;
-                    }//if bitti
+                    } // if bitti
+
                     sayac += veriTabaniIslemleri.VeriSil("Talimatlar", $"Id={item.Cells["Id"].Value}");
-                }//foreach bitti
+
+                } // foreach bitti
+
                 MessageBox.Show($"Seçtiğiniz {sayac} adet talimat iptal edilmiştir.");
                 TalimatlariDataGrideGetir();
                 BekleyenTalimatSayisiniGetir();
-
             }
             catch (Exception hata)
             {
-
                 MessageBox.Show("Beklenmedik bir sorun oluştu! " + hata.Message);
             }
         }
+
+        private void talimatiYukleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            try
+            {
+                int sayac = 0;
+                foreach (DataGridViewRow item in dataGridViewTalimatlar.SelectedRows)
+                {
+                    //talimatlar tablosunu güncellemek
+                    Hashtable talimatkolonlar = new Hashtable();
+                    talimatkolonlar.Add("YuklendiMi", 1);
+                    talimatkolonlar.Add("YuklenmeTarihi", $"'{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'");
+                    string talimatGuncelle = veriTabaniIslemleri.VeriGuncellemeCumlesiOlustur("Talimatlar", talimatkolonlar, $"Id={item.Cells["Id"].Value}");
+                    if (veriTabaniIslemleri.KomutIsle(talimatGuncelle) > 0)
+                    {
+                        //akbilin mevcut bakiyesini öğren
+                        decimal bakiye = Convert.ToDecimal(
+                        veriTabaniIslemleri.VeriOku("Akbiller", new string[] { "Bakiye" },
+                            $"AkbilNo='{item.Cells["Akbil"].Value.ToString()?.Substring(0, 16)}'")["Bakiye"]);
+
+                        //var sonuc = veriTabaniIslemleri.VeriOku("Akbiller", new string[] { "Bakiye" },
+                        //    $"AkbilNo='{item.Cells["Akbil"].Value.ToString()?.Substring(0, 15)}'");
+                        //decimal bakiye = (decimal)sonuc["Bakiye"];
+
+                        //akbil bakiyesini güncellemek
+                        Hashtable akbilkolon = new Hashtable();
+
+                        var sonBakiye = (bakiye + (decimal)item.Cells["YuklenecekTutar"].Value).ToString().Replace(",", ".");
+
+                        akbilkolon.Add("Bakiye", sonBakiye);
+
+                        string akbilGuncelle = veriTabaniIslemleri.VeriGuncellemeCumlesiOlustur("Akbiller", akbilkolon, $"AkbilNo='{item.Cells["Akbil"].Value.ToString()?.Substring(0, 16)}'");
+
+                        sayac += veriTabaniIslemleri.KomutIsle(akbilGuncelle);
+                    }
+                } // foreach bitti.
+                MessageBox.Show($"{sayac} adet talimat akbile yüklendi!");
+                TalimatlariDataGrideGetir();
+                BekleyenTalimatSayisiniGetir();
+            }
+            catch (Exception hata)
+            {
+                MessageBox.Show("Beklenmedik bir hata oluştu! " + hata.Message);
+            }
+        }
+
+
     }
 }

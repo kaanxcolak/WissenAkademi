@@ -27,6 +27,9 @@ namespace AkbilYonetimiUI
             checkBoxHatirla.TabIndex = 3;
             btnGirisYap.TabIndex = 4;
             btnKayitOl.TabIndex = 5;
+
+            txtEmail.Text = "kaan@gmail.com";
+            txtSifre.Text = "123";
               
             
         }

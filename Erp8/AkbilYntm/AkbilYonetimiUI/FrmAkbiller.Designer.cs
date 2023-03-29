@@ -30,7 +30,7 @@
         {
             menuStrip1 = new MenuStrip();
             anaSayfaToolStripMenuItem = new ToolStripMenuItem();
-            çIKIŞYAPToolStripMenuItem = new ToolStripMenuItem();
+            cikisYapToolStripMenuItem = new ToolStripMenuItem();
             groupBox1 = new GroupBox();
             btnKaydet = new Button();
             cmbBoxAkbilTipleri = new ComboBox();
@@ -47,7 +47,7 @@
             // 
             menuStrip1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { anaSayfaToolStripMenuItem, çIKIŞYAPToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { anaSayfaToolStripMenuItem, cikisYapToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(622, 36);
@@ -59,12 +59,14 @@
             anaSayfaToolStripMenuItem.Name = "anaSayfaToolStripMenuItem";
             anaSayfaToolStripMenuItem.Size = new Size(128, 32);
             anaSayfaToolStripMenuItem.Text = "ANASAYFA";
+            anaSayfaToolStripMenuItem.Click += anaSayfaToolStripMenuItem_Click;
             // 
-            // çIKIŞYAPToolStripMenuItem
+            // cikisYapToolStripMenuItem
             // 
-            çIKIŞYAPToolStripMenuItem.Name = "çIKIŞYAPToolStripMenuItem";
-            çIKIŞYAPToolStripMenuItem.Size = new Size(116, 32);
-            çIKIŞYAPToolStripMenuItem.Text = "ÇIKIŞ YAP";
+            cikisYapToolStripMenuItem.Name = "cikisYapToolStripMenuItem";
+            cikisYapToolStripMenuItem.Size = new Size(116, 32);
+            cikisYapToolStripMenuItem.Text = "ÇIKIŞ YAP";
+            cikisYapToolStripMenuItem.Click += cikisYapToolStripMenuItem_Click;
             // 
             // groupBox1
             // 
@@ -166,7 +168,7 @@
 
         private MenuStrip menuStrip1;
         private ToolStripMenuItem anaSayfaToolStripMenuItem;
-        private ToolStripMenuItem çIKIŞYAPToolStripMenuItem;
+        private ToolStripMenuItem cikisYapToolStripMenuItem;
         private GroupBox groupBox1;
         private Button btnKaydet;
         private ComboBox cmbBoxAkbilTipleri;

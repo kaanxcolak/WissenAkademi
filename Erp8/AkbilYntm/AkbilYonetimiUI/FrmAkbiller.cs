@@ -93,5 +93,21 @@ namespace AkbilYonetimiUI
                 MessageBox.Show("Akbilleri listeleyemedim !" + hata.Message);
             }
         }
+
+        private void anaSayfaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmAnasayfa frma = new FrmAnasayfa();
+            this.Hide();
+            frma.Show();
+
+        }
+
+        private void cikisYapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Çıkış yapıldı");
+            FrmAnasayfa frma = new FrmAnasayfa(); 
+            this.Hide();
+            frma.Show();
+        }
     }
 }
