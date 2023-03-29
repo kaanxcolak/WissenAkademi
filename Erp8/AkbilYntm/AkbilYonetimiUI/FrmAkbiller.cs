@@ -15,25 +15,25 @@ namespace AkbilYonetimiUI
 {
     public partial class FrmAkbiller : Form
     {
-        IVeriTabaniIslemleri veriTabaniIslemleri = new SqlVeriTabaniIslemleri();
+        IVeriTabaniIslemleri veriTabaniIslemleri = new SQLVeriTabaniIslemleri();
         public FrmAkbiller()
         {
             InitializeComponent();
         }
-
         private void btnKaydet_Click(object sender, EventArgs e)
         {
             try
             {
-                //kontroller
+                // kontroller
+
                 if (cmbBoxAkbilTipleri.SelectedIndex < 0)
                 {
-                    MessageBox.Show("Lütfen ekleyeceğiniz Akbilin türünü seçiniz! ");
+                    MessageBox.Show("Lütfen ekleyeceğiniz akbilin türünü seçiniz!");
                     return;
                 }
                 if (maskedTextBoxAkbilNo.Text.Length < 16)
                 {
-                    MessageBox.Show("Akbil No 16 haneli olmak zorundadır");
+                    MessageBox.Show("Akbil No 16 haneli olmak zorundadır!");
                     return;
                 }
                 Dictionary<string, object> yeniAkbilBilgileri = new Dictionary<string, object>();
@@ -48,7 +48,7 @@ namespace AkbilYonetimiUI
                 int sonuc = veriTabaniIslemleri.KomutIsle(insertCumle);
                 if (sonuc > 0)
                 {
-                    MessageBox.Show("Akbil Eklendi! ");
+                    MessageBox.Show("Akbil eklendi");
                     DataGridViewiDoldur();
                     maskedTextBoxAkbilNo.Clear();
                     cmbBoxAkbilTipleri.SelectedIndex = -1;
@@ -56,24 +56,20 @@ namespace AkbilYonetimiUI
                 }
                 else
                 {
-                    MessageBox.Show("Akbil Eklenemedi! ");
+                    MessageBox.Show("Akbil eklenemedi!");
                 }
-
-
 
             }
             catch (Exception hata)
             {
-
-                MessageBox.Show("Beklenmedik bir hata oluştu! " + hata.Message); ;
+                MessageBox.Show("Beklenmedik bir hata oluştu !" + hata.Message);
             }
         }
 
         private void FrmAkbiller_Load(object sender, EventArgs e)
         {
-            cmbBoxAkbilTipleri.Text = "Akbil tipi seçiniz...";
+            cmbBoxAkbilTipleri.Text = "Akbil tipi seçniz...";
             cmbBoxAkbilTipleri.SelectedIndex = -1;
-            dataGridViewAkbiller.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             DataGridViewiDoldur();
         }
@@ -82,20 +78,20 @@ namespace AkbilYonetimiUI
         {
             try
             {
-                dataGridViewAkbiller.DataSource = veriTabaniIslemleri.
-                    VeriGetir("Akbiller", kosullar: $"AkbilSahibiId={GenelIslemler.GirisYapanKullaniciID}");
+
+                dataGridViewAkbiller.DataSource = veriTabaniIslemleri.VeriGetir("Akbiller", kosullar: $"AkbilSahibiId={GenelIslemler.GirisYapanKullaniciID}");
 
                 //bazı kolonlar gizlensin
                 dataGridViewAkbiller.Columns["AkbilSahibiId"].Visible = false;
                 dataGridViewAkbiller.Columns["VizelendigiTarih"].HeaderText = "Vizelendiği Tarih";
                 dataGridViewAkbiller.Columns["VizelendigiTarih"].Width = 200;
+
             }
             catch (Exception hata)
             {
+
                 MessageBox.Show("Akbilleri listeleyemedim !" + hata.Message);
             }
         }
-
-        
     }
 }

@@ -4,41 +4,43 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AkbilYntmVeriKatmani
 {
-    public class SqlVeriTabaniIslemleri : IVeriTabaniIslemleri
+    public class SQLVeriTabaniIslemleri : IVeriTabaniIslemleri
     {
         public string BaglantiCumlesi { get; set; }
 
         private SqlConnection baglanti;
         private SqlCommand komut;
-        public SqlVeriTabaniIslemleri()
+
+        public SQLVeriTabaniIslemleri()
         {
             BaglantiCumlesi = GenelIslemler.SinifSQLBaglantiCumlesi;
             baglanti = new SqlConnection(BaglantiCumlesi);
             komut = new SqlCommand();
             komut.Connection = baglanti;
         }
-        public SqlVeriTabaniIslemleri(string baglantiCumle)
+
+        public SQLVeriTabaniIslemleri(string baglantiCumle)
         {
             BaglantiCumlesi = baglantiCumle;
             baglanti = new SqlConnection(BaglantiCumlesi);
             komut = new SqlCommand();
             komut.Connection = baglanti;
         }
-
         private void BaglantiyiAc()
         {
             baglanti.ConnectionString = BaglantiCumlesi;
             if (baglanti.State != ConnectionState.Open)
             {
-                baglanti.Open();    
-            }            
+                baglanti.Open();
+            }
         }
 
         public int KomutIsle(string eklemeyadaGuncellemeCumlesi)
@@ -53,7 +55,8 @@ namespace AkbilYntmVeriKatmani
                     int etkilenenSatirSayisi = komut.ExecuteNonQuery();
                     return etkilenenSatirSayisi;
 
-                    //return komut.ExecuteNonQuery();
+                    // return komut.ExecuteNonQuery(); 
+
                 }
             }
             catch (Exception)
@@ -61,14 +64,13 @@ namespace AkbilYntmVeriKatmani
 
                 throw;
             }
-
         }
 
         public string VeriEklemeCumlesiOlustur(string tabloAdi, Dictionary<string, object> kolonlar)
         {
             try
             {
-                //insert into TabloAdi (Kolonlar ) values (degerler)
+                // insert into TabloAdi (kolonlar) values (degerler)
                 string sorgu = string.Empty;
                 string sutunlar = string.Empty;
                 string degerler = string.Empty;
@@ -78,12 +80,12 @@ namespace AkbilYntmVeriKatmani
                     sutunlar += $"{item.Key},";
                     degerler += $"{item.Value},";
                 }
-                //en sondaki virgülden kurtulmak için TRIM kullanalım
+                // en sondaki virgülden kurtulmamız için TRIM kullanalım
                 sutunlar = sutunlar.TrimEnd(',');
                 degerler = degerler.TrimEnd(',');
 
                 sorgu = $"insert into {tabloAdi} ({sutunlar}) values ({degerler})";
-                return sorgu;                                                                               
+                return sorgu;
             }
             catch (Exception)
             {
@@ -96,20 +98,19 @@ namespace AkbilYntmVeriKatmani
         {
             try
             {
-                using (baglanti) 
+                using (baglanti)
                 {
-                    string sorgu = $"select {kolonlar} from {tabloAdi}";
+                    string sorgu = $"select {kolonlar} from {tabloAdi} ";
                     if (!string.IsNullOrEmpty(kosullar))
                     {
                         sorgu += $" where {kosullar}";
                     }
                     komut.CommandText = sorgu;
-                    SqlDataAdapter adp = new SqlDataAdapter(komut); //dataadapter sorgu sonucu gelen datayı doldurur. Reader tek tek okur
-                    BaglantiyiAc(); 
-                    DataTable dt =new DataTable();
+                    SqlDataAdapter adp = new SqlDataAdapter(komut);
+                    BaglantiyiAc();
+                    DataTable dt = new DataTable();
                     adp.Fill(dt);
-                    return dt;  
-
+                    return dt;
                 }
             }
             catch (Exception)
@@ -119,24 +120,23 @@ namespace AkbilYntmVeriKatmani
             }
         }
 
-        public string VeriGuncellemeCumlesiOlustur(string tabloAdi, Hashtable kolonlar, string? kosullar = null)
+        public string VeriGuncellemeCumlesiOlustur(string tabloAdi, Hashtable kolonlar,
+            string? kosullar = null)
         {
             try
             {
-                //update TabloAdi set col1 = deger1, ... where kosul
+                //update TabloAdi set col1=deger1,... where kosul
                 string sorgu = string.Empty, setler = string.Empty;
                 foreach (var item in kolonlar.Keys)
                 {
-                    setler += $"{item}= {kolonlar[item]}, ";
+                    setler += $"{item}={kolonlar[item]}, ";
                 }
-                setler = setler.Trim().TrimEnd(',');
+                setler = setler.Trim().TrimEnd(','); // todo deneyeceğiz...
 
-
-
-                sorgu = $"update {tabloAdi} set {setler}";
+                sorgu = $"update {tabloAdi} set {setler} ";
                 if (!string.IsNullOrEmpty(kosullar))
                 {
-                    sorgu += $"where {kosullar}";
+                    sorgu += $" where {kosullar}";
                 }
                 return sorgu;
 
@@ -154,12 +154,13 @@ namespace AkbilYntmVeriKatmani
             {
                 Hashtable sonuc = new Hashtable();
                 string sutunlar = string.Empty;
-                //kolonlara , ekleyeceğiz
+                // kolonlara virgül ekleyeceğiz
                 StringBuilder sb = new StringBuilder();
                 foreach (var item in kolonlar)
                 {
                     sb.Append($"{item} ,");
-                }sutunlar = sb.ToString().TrimEnd(',');
+                }
+                sutunlar = sb.ToString().TrimEnd(',');
 
                 string sorgu = $"select {sutunlar} from {tabloAdi} ";
                 if (!string.IsNullOrEmpty(kosullar))
@@ -179,17 +180,17 @@ namespace AkbilYntmVeriKatmani
                             //{
                             //    sonuc.Add(kolonlar[i], okuyucu[kolonlar[i]]);
 
-                            //}
+                            //} 
                             foreach (var item in kolonlar)
                             {
-                                sonuc.Add(item, okuyucu[item]);   //birden çok akbil geldiğinde ?                            
+                                sonuc.Add(item, okuyucu[item]); // birden çok akbil geldiğinde ??
                             }
-                        }//while bitti
-
+                        } // while bitti.
                     }
                 }
 
                 return sonuc;
+
             }
             catch (Exception)
             {
@@ -205,7 +206,7 @@ namespace AkbilYntmVeriKatmani
                 using (baglanti)
                 {
                     string sorgu = $"delete from {tabloAdi} ";
-                    if (string.IsNullOrEmpty(kosullar))
+                    if (!string.IsNullOrEmpty(kosullar))
                     {
                         sorgu += $" where {kosullar}";
                     }
@@ -214,7 +215,7 @@ namespace AkbilYntmVeriKatmani
                     int silinenSatirSayisi = komut.ExecuteNonQuery();
                     return silinenSatirSayisi;
 
-                    //return komut.ExecuteNonQuery();
+                    //  return komut.ExecuteNonQuery(); 
                 }
             }
             catch (Exception)
@@ -223,5 +224,6 @@ namespace AkbilYntmVeriKatmani
                 throw;
             }
         }
+
     }
 }

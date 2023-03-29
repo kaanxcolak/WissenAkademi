@@ -9,7 +9,7 @@ namespace AkbilYonetimiUI
     public partial class FrmGiris : Form
     {
         public string Email { get; set; }   //kayıt ol formunda kayıt olan kullanıcının emaili buraya gelsin
-        IVeriTabaniIslemleri veriTabaniIslemleri = new SqlVeriTabaniIslemleri();
+        IVeriTabaniIslemleri veriTabaniIslemleri = new SQLVeriTabaniIslemleri();
         public FrmGiris()
         {
             InitializeComponent();
@@ -27,7 +27,7 @@ namespace AkbilYonetimiUI
             checkBoxHatirla.TabIndex = 3;
             btnGirisYap.TabIndex = 4;
             btnKayitOl.TabIndex = 5;
-
+              
             
         }
 

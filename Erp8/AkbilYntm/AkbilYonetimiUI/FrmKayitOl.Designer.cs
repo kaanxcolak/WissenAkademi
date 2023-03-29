@@ -49,7 +49,7 @@
             label1.Location = new Point(25, 17);
             label1.Name = "label1";
             label1.Size = new Size(51, 28);
-            label1.TabIndex = 0;
+            label1.TabIndex = 11;
             label1.Text = "İsim:";
             // 
             // label2
@@ -59,7 +59,7 @@
             label2.Location = new Point(25, 54);
             label2.Name = "label2";
             label2.Size = new Size(84, 28);
-            label2.TabIndex = 0;
+            label2.TabIndex = 10;
             label2.Text = "Soyisim:";
             // 
             // label3
@@ -69,7 +69,7 @@
             label3.Location = new Point(25, 91);
             label3.Name = "label3";
             label3.Size = new Size(63, 28);
-            label3.TabIndex = 0;
+            label3.TabIndex = 9;
             label3.Text = "Email:";
             // 
             // label4
@@ -79,7 +79,7 @@
             label4.Location = new Point(25, 128);
             label4.Name = "label4";
             label4.Size = new Size(55, 28);
-            label4.TabIndex = 0;
+            label4.TabIndex = 8;
             label4.Text = "Şifre:";
             // 
             // label5
@@ -89,7 +89,7 @@
             label5.Location = new Point(25, 165);
             label5.Name = "label5";
             label5.Size = new Size(85, 28);
-            label5.TabIndex = 0;
+            label5.TabIndex = 7;
             label5.Text = "D. Tarihi:";
             // 
             // txtIsim
@@ -98,7 +98,7 @@
             txtIsim.Location = new Point(115, 17);
             txtIsim.Name = "txtIsim";
             txtIsim.Size = new Size(218, 34);
-            txtIsim.TabIndex = 1;
+            txtIsim.TabIndex = 0;
             // 
             // txtSoyisim
             // 
@@ -114,7 +114,7 @@
             txtEmail.Location = new Point(115, 91);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(218, 34);
-            txtEmail.TabIndex = 1;
+            txtEmail.TabIndex = 2;
             // 
             // txtSifre
             // 
@@ -122,7 +122,7 @@
             txtSifre.Location = new Point(115, 128);
             txtSifre.Name = "txtSifre";
             txtSifre.Size = new Size(218, 34);
-            txtSifre.TabIndex = 1;
+            txtSifre.TabIndex = 3;
             // 
             // btnKayitOl
             // 
@@ -131,7 +131,7 @@
             btnKayitOl.Location = new Point(25, 210);
             btnKayitOl.Name = "btnKayitOl";
             btnKayitOl.Size = new Size(308, 49);
-            btnKayitOl.TabIndex = 2;
+            btnKayitOl.TabIndex = 5;
             btnKayitOl.Text = "KAYIT OL";
             btnKayitOl.UseVisualStyleBackColor = false;
             btnKayitOl.Click += btnKayitOl_Click;
@@ -143,7 +143,7 @@
             btnGirisYap.Location = new Point(25, 265);
             btnGirisYap.Name = "btnGirisYap";
             btnGirisYap.Size = new Size(308, 49);
-            btnGirisYap.TabIndex = 2;
+            btnGirisYap.TabIndex = 6;
             btnGirisYap.Text = "GİRİŞ YAP";
             btnGirisYap.UseVisualStyleBackColor = false;
             btnGirisYap.Click += btnGirisYap_Click;
@@ -153,8 +153,7 @@
             dtpDogumTarihi.Location = new Point(115, 165);
             dtpDogumTarihi.Name = "dtpDogumTarihi";
             dtpDogumTarihi.Size = new Size(218, 27);
-            dtpDogumTarihi.TabIndex = 3;
-            dtpDogumTarihi.ValueChanged += dtpDogumTarihi_ValueChanged;
+            dtpDogumTarihi.TabIndex = 4;
             // 
             // FrmKayitOl
             // 

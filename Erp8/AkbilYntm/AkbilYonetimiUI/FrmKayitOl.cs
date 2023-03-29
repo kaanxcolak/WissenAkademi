@@ -15,10 +15,10 @@ namespace AkbilYonetimiUI
 {
     public partial class FrmKayitOl : Form
     {
-        IVeriTabaniIslemleri veriTabaniIslemleri = new SqlVeriTabaniIslemleri(GenelIslemler.SinifSQLBaglantiCumlesi);
+        IVeriTabaniIslemleri veriTabaniIslemleri = new SQLVeriTabaniIslemleri(GenelIslemler.SinifSQLBaglantiCumlesi);
         public FrmKayitOl()
         {
-            InitializeComponent(); //İnşa Etmek
+            InitializeComponent(); // İnşa etmek
         }
 
         private void FrmKayitOl_Load(object sender, EventArgs e)
@@ -28,8 +28,8 @@ namespace AkbilYonetimiUI
             dtpDogumTarihi.MaxDate = new DateTime(2016, 1, 1);
             dtpDogumTarihi.Value = new DateTime(2016, 1, 1);
             dtpDogumTarihi.Format = DateTimePickerFormat.Short;
-            #endregion
 
+            #endregion
         }
 
         private void btnKayitOl_Click(object sender, EventArgs e)
@@ -38,28 +38,34 @@ namespace AkbilYonetimiUI
             {
                 foreach (var item in Controls)
                 {
-                    if (item is TextBox && string.IsNullOrEmpty(((TextBox) item).Text))
+                    if (item is TextBox && string.IsNullOrEmpty(((TextBox)item).Text))
                     {
-                        MessageBox.Show("Zorunlu alanları doldurunuz! ");
+                        MessageBox.Show("Zorunlu alanları doldurunuz!");
                         return;
                     }
                 }
-                Dictionary<string,object> kolonlar = new Dictionary<string, object>();
-                kolonlar.Add("Ad",$"'{txtIsim.Text.Trim()}'");
-                kolonlar.Add("Soyad",$"'{txtSoyisim.Text.Trim()}'");
-                kolonlar.Add("Email",$"'{txtEmail.Text.Trim()}'");
-                kolonlar.Add("EklenmeTarihi",$"'{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'");
-                kolonlar.Add("DogumTarihi",$"'{dtpDogumTarihi.Value.ToString("yyyyMMdd")}'");
-                kolonlar.Add("Parola",$"'{GenelIslemler.MD5Encryption(txtSifre.Text.Trim())}'");
-                
-                string insertCumle = veriTabaniIslemleri.VeriEklemeCumlesiOlustur("Kullanicilar",kolonlar);
+                Dictionary<string, object> kolonlar = new Dictionary<string, object>();
+                kolonlar.Add("Ad", $"'{txtIsim.Text.Trim()}'");
+                kolonlar.Add("Soyad", $"'{txtSoyisim.Text.Trim()}'");
+                kolonlar.Add("Email", $"'{txtEmail.Text.Trim()}'");
+                kolonlar.Add("EklenmeTarihi", $"'{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'");
+                kolonlar.Add("DogumTarihi", $"'{dtpDogumTarihi.Value.ToString("yyyyMMdd")}'");
+                kolonlar.Add("Parola", $"'{GenelIslemler.MD5Encryption(txtSifre.Text.Trim())}'");
+
+
+                string insertCumle = veriTabaniIslemleri.VeriEklemeCumlesiOlustur("Kullanicilar", kolonlar);
                 int sonuc = veriTabaniIslemleri.KomutIsle(insertCumle);
-                if (sonuc > 0)
+                if (sonuc > 0) ///////burada
                 {
                     MessageBox.Show("Kayıt oluşturuldu");
-                    DialogResult cevap= MessageBox.Show("giriş sayfasına yönlendirmemizi ister misin?", "SORU",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
-                    if (cevap==DialogResult.Yes)
+
+                    DialogResult cevap = MessageBox.Show("Giriş sayfasına yönlendirmemizi ister misin?", "SORU", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (cevap == DialogResult.Yes)
                     {
+                        // temizklik
+
+                        // Girişe git
                         FrmGiris frmg = new FrmGiris();
                         frmg.Email = txtEmail.Text.Trim();
 
@@ -69,7 +75,6 @@ namespace AkbilYonetimiUI
                         }
                         frmg.Show();
                     }
-
                 }
                 else
                 {
@@ -78,8 +83,8 @@ namespace AkbilYonetimiUI
             }
             catch (Exception ex)
             {
-                //ex log.txt'ye yazılacak(loglama)
-                MessageBox.Show($"Beklenmedik bir hata oluştu! Lütfen tekrar deneyiniz !");
+                // ex log.txt'ye yazılanacak (loglama)
+                MessageBox.Show("Beklenmedik bir hata oluştu! Lütfen tekrar deneyiniz !");
             }
         }
 
@@ -99,11 +104,6 @@ namespace AkbilYonetimiUI
         private void btnGirisYap_Click(object sender, EventArgs e)
         {
             GirisFormunaGit();
-        }
-
-        private void dtpDogumTarihi_ValueChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -69,5 +69,26 @@ namespace AkbilYonetimiUI.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap png_transparent_checkbox_computer_icons_green_tick_mark_text_trademark_logo {
+            get {
+                object obj = ResourceManager.GetObject("png-transparent-checkbox-computer-icons-green-tick-mark-text-trademark-logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap png_transparent_wrong_incorrect_delete_abort_cancel_remove_red_small_mark_negative {
+            get {
+                object obj = ResourceManager.GetObject("png-transparent-wrong-incorrect-delete-abort-cancel-remove-red-small-mark-negativ" +
+                        "e", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

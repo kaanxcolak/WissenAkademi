@@ -57,6 +57,7 @@
             btnTalimat.TabIndex = 0;
             btnTalimat.Text = "TALİMAT İŞLEMLERİ";
             btnTalimat.UseVisualStyleBackColor = false;
+            btnTalimat.Click += btnTalimat_Click;
             // 
             // btnAyarlar
             // 
