@@ -2,12 +2,16 @@
 using Microsoft.VisualBasic;
 using System.Data.SqlClient;
 using System.Text;
+using AkbilYonetimiIsKatmani;
+using AkbilYonetimiVeriKatmani;
+using AkbilYonetimiUI.Models;
 
 namespace AkbilYonetimiUI
 {
     public partial class FrmGiris : Form
     {
         public string Email { get; set; }   //kayıt ol formunda kayıt olan kullanıcının emaili buraya gelsin
+        AkbildbContext context = new AkbildbContext();  
         
         public FrmGiris()
         {
@@ -55,8 +59,26 @@ namespace AkbilYonetimiUI
                     return;
                 }
                 //2)Girdiği email ve şifre veritabanında mevcut mu?
-                //select * from Kullanicilar where Email = '' and Sifre=''                
+                var kullanici =  context.Kullanicilars.FirstOrDefault(x=> x.Email == txtEmail.Text && x.Parola ==GenelIslemler.MD5Encryption(txtSifre.Text));
+                if (kullanici == null)
+                {
+                    MessageBox.Show("Email ya da şifrenizi yanlış girdiniz!");
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show($"Hoşgeldiniz... {kullanici.Ad} {kullanici.Soyad}");
+                    GenelIslemler.GirisYapanKullaniciID = kullanici.Id;
+                    GenelIslemler.GirisYapanKullaniciEmail = kullanici.Email;
+                    GenelIslemler.GirisYapanKullaniciAdSoyad = $"{kullanici.Ad} {kullanici.Soyad}";
+                    //Beni hatırla settings ile olacak
+                    //temizlik
+                    txtEmail.Clear(); txtSifre.Clear();
+                    FrmAnasayfa frmAnasayfa = new FrmAnasayfa();
+                    this.Hide();
+                    frmAnasayfa.Show();
 
+                }
             }
             catch (Exception hata)
             {

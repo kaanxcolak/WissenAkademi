@@ -1,5 +1,4 @@
-﻿using AkbilYntmIsKatmani;
-using AkbilYntmVeriKatmani;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,42 +43,7 @@ namespace AkbilYonetimiUI
                         return;
                     }
                 }
-                Dictionary<string, object> kolonlar = new Dictionary<string, object>();
-                kolonlar.Add("Ad", $"'{txtIsim.Text.Trim()}'");
-                kolonlar.Add("Soyad", $"'{txtSoyisim.Text.Trim()}'");
-                kolonlar.Add("Email", $"'{txtEmail.Text.Trim()}'");
-                kolonlar.Add("EklenmeTarihi", $"'{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}'");
-                kolonlar.Add("DogumTarihi", $"'{dtpDogumTarihi.Value.ToString("yyyyMMdd")}'");
-                kolonlar.Add("Parola", $"'{GenelIslemler.MD5Encryption(txtSifre.Text.Trim())}'");
-
-
-                string insertCumle = veriTabaniIslemleri.VeriEklemeCumlesiOlustur("Kullanicilar", kolonlar);
-                int sonuc = veriTabaniIslemleri.KomutIsle(insertCumle);
-                if (sonuc > 0) ///////burada
-                {
-                    MessageBox.Show("Kayıt oluşturuldu");
-
-                    DialogResult cevap = MessageBox.Show("Giriş sayfasına yönlendirmemizi ister misin?", "SORU", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                    if (cevap == DialogResult.Yes)
-                    {
-                        // temizklik
-
-                        // Girişe git
-                        FrmGiris frmg = new FrmGiris();
-                        frmg.Email = txtEmail.Text.Trim();
-
-                        foreach (Form item in Application.OpenForms)
-                        {
-                            item.Hide();
-                        }
-                        frmg.Show();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Kayıt EKLENEMEDİ!");
-                }
+                
             }
             catch (Exception ex)
             {

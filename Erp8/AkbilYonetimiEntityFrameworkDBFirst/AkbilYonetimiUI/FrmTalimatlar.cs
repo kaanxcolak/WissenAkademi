@@ -9,12 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AkbilYonetimiIsKatmani;
+using AkbilYonetimiVeriKatmani;
+using AkbilYonetimiVeriKatmani.Models;
 
 namespace AkbilYonetimiUI
 {
     public partial class FrmTalimatlar : Form
     {
-        
+        AkbildbContext context = new AkbildbContext();
+
         public FrmTalimatlar()
         {
             InitializeComponent();
@@ -43,7 +47,23 @@ namespace AkbilYonetimiUI
         {
             try
             {
-  
+                //burada bekleyen taliatları bulur
+                var bekleyen = context.KullanicininTalimatlaris.Where(x => x.KullaniciId ==
+                GenelIslemler.GirisYapanKullaniciID && !x.YuklendiMi);
+                
+                if (cmbBoxAkbiller.SelectedIndex > 0)
+                {
+                    //burada ise bekleyen talimatlar içinden sadece cmboda seçili olanın sayısını alıyoruz
+                    bekleyen.Count(x => x.Akbil.Substring(0, 16)
+                    == cmbBoxAkbiller.SelectedItem.ToString()).ToString();
+                }
+                else
+                {
+                    //bekleyen talimatı yukarıda almıştık.Aldığımız sonucu count ile saydık
+                    lblBekleyenTalimat.Text = bekleyen.Count().ToString();
+                }
+
+
             }
             catch (Exception hata)
             {
@@ -55,7 +75,8 @@ namespace AkbilYonetimiUI
         {
             try
             {
-                
+                dataGridViewTalimatlar.DataSource = context.KullanicininTalimatlaris.Where(x =>
+                x.KullaniciId == GenelIslemler.GirisYapanKullaniciID).ToString();
 
                 foreach (DataGridViewColumn item in dataGridViewTalimatlar.Columns)
                 {
@@ -75,8 +96,11 @@ namespace AkbilYonetimiUI
         {
             try
             {
-                
-
+                cmbBoxAkbiller.DataSource = context.Akbillers.Where(x => x.AkbilSahibiId ==
+                GenelIslemler.GirisYapanKullaniciID).ToList();
+                cmbBoxAkbiller.DisplayMember = "AkbilNo";
+                cmbBoxAkbiller.ValueMember = "AkbilNo";
+              
             }
             catch (Exception hata)
             {
@@ -121,7 +145,7 @@ namespace AkbilYonetimiUI
                     return;
                 }
 
-                
+
 
             }
             catch (Exception hata)
@@ -212,7 +236,7 @@ namespace AkbilYonetimiUI
                     {
                         continue;
                     }
-                    
+
                 } // foreach bitti.
                 MessageBox.Show($"{sayac} adet talimat akbile yüklendi!");
                 TalimatlariDataGrideGetir();
@@ -222,6 +246,6 @@ namespace AkbilYonetimiUI
             {
                 MessageBox.Show("Beklenmedik bir hata oluştu! " + hata.Message);
             }
-        }      
+        }
     }
 }

@@ -9,12 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AkbilYonetimiIsKatmani;
+using AkbilYonetimiVeriKatmani;
+using AkbilYonetimiVeriKatmani.Models;
 
 namespace AkbilYonetimiUI
 {
     public partial class FrmAkbiller : Form
     {
-       
+        AkbildbContext context = new AkbildbContext();
         public FrmAkbiller()
         {
             InitializeComponent();
@@ -35,7 +38,34 @@ namespace AkbilYonetimiUI
                     MessageBox.Show("Akbil No 16 haneli olmak zorundadır!");
                     return;
                 }
-                
+                Akbiller yeniAkbil = new Akbiller()
+                {
+                    EklenmeTarihi = DateTime.Now,
+                    AkbilNo = maskedTextBoxAkbilNo.Text,
+                    AkbilSahibiId = GenelIslemler.GirisYapanKullaniciID,
+                    AkbilTipi = cmbBoxAkbilTipleri.SelectedItem.ToString(),
+                    Bakiye = 0,
+                    VizelendigiTarih = null
+                };
+                context.Akbillers.Add(yeniAkbil);
+                int sonuc = context.SaveChanges();
+                if (sonuc > 0)
+                {
+                    MessageBox.Show("Yeni Akbil Eklendi!");
+                    //Temizlik
+                    maskedTextBoxAkbilNo.Clear();
+
+                    cmbBoxAkbilTipleri.Text = "Akbil Tipi Seçiniz...";
+                    cmbBoxAkbilTipleri.SelectedIndex = -1;
+
+                    DataGridViewiDoldur();
+
+                }
+                else
+                {
+                    MessageBox.Show("Yeni Akbil EKLENEMEDİ!");
+                }
+
 
             }
             catch (Exception hata)
@@ -56,6 +86,8 @@ namespace AkbilYonetimiUI
         {
             try
             {
+                dataGridViewAkbiller.DataSource = context.Akbillers.Where(x =>
+                x.AkbilSahibiId == GenelIslemler.GirisYapanKullaniciID).ToList();
 
                 //bazı kolonlar gizlensin
                 dataGridViewAkbiller.Columns["AkbilSahibiId"].Visible = false;
@@ -80,10 +112,21 @@ namespace AkbilYonetimiUI
 
         private void cikisYapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Çıkış yapıldı");
-            FrmAnasayfa frma = new FrmAnasayfa(); 
-            this.Hide();
-            frma.Show();
+            MessageBox.Show("Güle Güle Çıkış Yapıldı");
+            GenelIslemler.GirisYapanKullaniciAdSoyad = string.Empty;
+            GenelIslemler.GirisYapanKullaniciID = 0;
+
+            foreach (Form item in Application.OpenForms)
+            {
+                if (item.Name != "FrmGiris")
+                {
+                    item.Hide();
+                }
+            }
+            Application.OpenForms["FrmGiris"].Show();
+
         }
+
+        
     }
 }
