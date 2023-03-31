@@ -153,7 +153,7 @@
             dataGridViewTalimatlar.AllowUserToDeleteRows = false;
             dataGridViewTalimatlar.AllowUserToOrderColumns = true;
             dataGridViewTalimatlar.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewTalimatlar.Location = new Point(49, 238);
+            dataGridViewTalimatlar.Location = new Point(51, 225);
             dataGridViewTalimatlar.Name = "dataGridViewTalimatlar";
             dataGridViewTalimatlar.ReadOnly = true;
             dataGridViewTalimatlar.RowHeadersWidth = 51;
@@ -186,7 +186,6 @@
             talimatiIptalEtToolStripMenuItem.Name = "talimatiIptalEtToolStripMenuItem";
             talimatiIptalEtToolStripMenuItem.Size = new Size(185, 26);
             talimatiIptalEtToolStripMenuItem.Text = "Talimatı İptal Et";
-            talimatiIptalEtToolStripMenuItem.Click += talimatiIptalEtToolStripMenuItem_Click;
             // 
             // groupBoxYukleme
             // 
