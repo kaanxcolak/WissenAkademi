@@ -46,7 +46,7 @@ namespace AkbilYonetimiUI
             try
             {
                 // burada bekleyen talimatları bulur
-                var bekleyen = context.KullanicininTalimatlaris.Where(x => x.KullaniciId == 
+                var bekleyen = context.KullanicininTalimatlaris.Where(x => x.KullaniciId ==
                 GenelIslemler.GirisYapanKullaniciID && !x.YuklendiMi);
 
                 if (cmbBoxAkbiller.SelectedIndex >= 0)
@@ -208,15 +208,12 @@ namespace AkbilYonetimiUI
             MessageBox.Show("Güle Güle Çıkış Yapıldı");
             //GenelIslemler.GirisYapanKullaniciAdSoyad = string.Empty;
             //GenelIslemler.GirisYapanKullaniciID = 0;
-
+            FrmGiris giris = new FrmGiris();
             foreach (Form item in Application.OpenForms)
             {
-                if (item.Name != "FrmGiris")
-                {
-                    item.Hide();
-                }
+                item.Hide();
             }
-            Application.OpenForms["FrmGiris"].Show();
+            giris.Show();
         }
 
         private void timerBekleyenTalimat_Tick(object sender, EventArgs e)
