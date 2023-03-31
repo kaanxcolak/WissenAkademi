@@ -1,4 +1,7 @@
-﻿
+﻿using AkbilYonetimiIsKatmani;
+using AkbilYonetimiVeriKatmani;
+using AkbilYonetimiVeriKatmani.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +17,8 @@ namespace AkbilYonetimiUI
 {
     public partial class FrmKayitOl : Form
     {
-       
+        AkbildbContext context = new AkbildbContext();
+
         public FrmKayitOl()
         {
             InitializeComponent(); // İnşa etmek
@@ -35,20 +39,79 @@ namespace AkbilYonetimiUI
         {
             try
             {
+                btnKayitOl.Enabled = false;
+                btnGirisYap.Enabled = false;
                 foreach (var item in Controls)
                 {
                     if (item is TextBox && string.IsNullOrEmpty(((TextBox)item).Text))
                     {
                         MessageBox.Show("Zorunlu alanları doldurunuz!");
+                        btnKayitOl.Enabled = true;
+                        btnGirisYap.Enabled = true;
                         return;
+
+                    }
+                }//foreach bitti
+                 //Bu emailden sistemde var mı?
+
+                if (context.Kullanicilars.FirstOrDefault(x => x.Email == txtEmail.Text.Trim()) != null)
+                {
+                    MessageBox.Show("Bu emaille sistemde kayıt mevcuttur!");
+                    btnKayitOl.Enabled = true;
+                    btnGirisYap.Enabled = true;
+                    return;
+                }
+
+                Kullanicilar yeniKullanici = new Kullanicilar()
+                {
+                    EklenmeTarihi = DateTime.Now,
+                    Ad = txtIsim.Text.Trim(),
+                    Soyad = txtSoyisim.Text.Trim(),
+                    DogumTarihi = dtpDogumTarihi.Value,
+                    Email = txtEmail.Text.Trim(),
+                    Parola = GenelIslemler.MD5Encryption(txtSifre.Text.Trim())
+                };
+                context.Kullanicilars.Add(yeniKullanici);
+                if (context.SaveChanges() > 0)
+                {
+                    MessageBox.Show("Kullanici Eklendi");
+                    //temizlik
+                    foreach (var item in Controls)
+                    {
+                        if (item is TextBox)
+                        {
+                            ((TextBox)item).Clear();
+                        }
+                        if (item is DateTimePicker)
+                        {
+                            ((DateTimePicker)item).Value = ((DateTimePicker)item).MaxDate;
+                        }
+
+                    }//foreach  bitti
+                    var cevap = MessageBox.Show("giriş sayfasına gitmek ister misiniz?", "SORU", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (cevap == DialogResult.Yes)
+                    {
+                        FrmGiris frmg = new FrmGiris();
+                        frmg.Email = txtEmail.Text.Trim();
+                        this.Hide();
+                        frmg.Show();
                     }
                 }
-                
+
+                else
+                {
+                    MessageBox.Show("Kullanici ekleme başarsız oldu");
+                }
+                btnKayitOl.Enabled = true;
+                btnGirisYap.Enabled = true;
+
             }
             catch (Exception ex)
             {
                 // ex log.txt'ye yazılanacak (loglama)
                 MessageBox.Show("Beklenmedik bir hata oluştu! Lütfen tekrar deneyiniz !");
+                btnKayitOl.Enabled = true;
+                btnGirisYap.Enabled = true;
             }
         }
 

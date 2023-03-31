@@ -8,11 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AkbilYonetimiIsKatmani;
+using AkbilYonetimiVeriKatmani;
+using AkbilYonetimiVeriKatmani.Models;
 
 namespace AkbilYonetimiUI
 {
     public partial class FrmAyarlar : Form
     {
+        AkbildbContext context = new AkbildbContext();
         public FrmAyarlar()
         {
             InitializeComponent();
@@ -26,18 +30,26 @@ namespace AkbilYonetimiUI
             dtpDogumTarihi.Format = DateTimePickerFormat.Short;
 
             KullanicininBilgileriniGetir();
-
         }
 
         private void KullanicininBilgileriniGetir()
         {
             try
             {
-                //Giriş yapmış kullanıcının bilgileriyle select sorgusu yazacağız
-                //Kullanıcı bilgisini alabilmek için burada 2 yöntem kullanabiliriz.
-                //Static bir class açıp içinde static GirisYapmisKullaniciEmail propertysi kullanılabilir.
-                //2.Yöntem olarak properties settings içine kayıtlı email bilgisinden yararlanılabilir.
-                
+                var kullanici = context.Kullanicilars.FirstOrDefault(x => x.Id == GenelIslemler.GirisYapanKullaniciID);
+                if (kullanici != null)
+                {
+                    txtAd.Text = kullanici.Ad;
+                    txtSoyad.Text = kullanici.Soyad;
+                    txtEmail.Text = kullanici.Email;
+                    txtEmail.Enabled = false;
+                    dtpDogumTarihi.Value = kullanici.DogumTarihi.Value;
+
+                }
+                else
+                {
+                    MessageBox.Show("Kullanıcı bilgileri getirilemedi!");
+                }
             }
             catch (Exception hata)
             {
@@ -49,7 +61,25 @@ namespace AkbilYonetimiUI
         {
             try
             {
-                
+                var kullanici = context.Kullanicilars.FirstOrDefault(x => x.Id == GenelIslemler.GirisYapanKullaniciID);
+                if (kullanici != null)
+                {
+                    kullanici.Ad = txtAd.Text.Trim();
+                    kullanici.Soyad = txtSoyad.Text.Trim();
+                    kullanici.DogumTarihi = dtpDogumTarihi.Value;
+                    if (!string.IsNullOrEmpty(txtSifre.Text.Trim()) 
+                        && kullanici.Parola != GenelIslemler.MD5Encryption(txtSifre.Text.Trim()))
+                    {
+                        kullanici.Parola = GenelIslemler.MD5Encryption(txtSifre.Text.Trim());
+                        MessageBox.Show("Yeni şifre girdiniz!!!");
+                    }
+                    context.Kullanicilars.Update(kullanici);
+                    if (context.SaveChanges() > 0)
+                    {
+                        MessageBox.Show("Bilgileriniz Güncellendi!");
+                        KullanicininBilgileriniGetir();
+                    }
+                }
             }
             catch (Exception hata)
             {
