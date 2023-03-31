@@ -84,6 +84,7 @@
             checkBoxHatirla.TabIndex = 2;
             checkBoxHatirla.Text = "Beni Hatırla";
             checkBoxHatirla.UseVisualStyleBackColor = true;
+            checkBoxHatirla.CheckedChanged += checkBoxHatirla_CheckedChanged;
             // 
             // btnKayitOl
             // 

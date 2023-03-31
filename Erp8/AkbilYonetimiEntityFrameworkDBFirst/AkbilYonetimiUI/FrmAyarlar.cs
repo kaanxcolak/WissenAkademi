@@ -78,6 +78,9 @@ namespace AkbilYonetimiUI
                     {
                         MessageBox.Show("Bilgileriniz Güncellendi!");
                         KullanicininBilgileriniGetir();
+                        FrmAnasayfa frma = new FrmAnasayfa();
+                        this.Hide();
+                        frma.Show();    
                     }
                 }
             }

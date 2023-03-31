@@ -11,8 +11,8 @@ namespace AkbilYonetimiUI
     public partial class FrmGiris : Form
     {
         public string Email { get; set; }   //kayıt ol formunda kayıt olan kullanıcının emaili buraya gelsin
-        AkbildbContext context = new AkbildbContext();  
-        
+        AkbildbContext context = new AkbildbContext();
+
         public FrmGiris()
         {
             InitializeComponent();
@@ -24,16 +24,22 @@ namespace AkbilYonetimiUI
             {
                 txtEmail.Text = Email;
             }
-
             txtEmail.TabIndex = 1;
             txtSifre.TabIndex = 2;
             checkBoxHatirla.TabIndex = 3;
             btnGirisYap.TabIndex = 4;
             btnKayitOl.TabIndex = 5;
-
-            txtEmail.Text = "kaan@gmail.com";
-            txtSifre.Text = "123";
+            txtSifre.PasswordChar = '*';
+            checkBoxHatirla.Checked = false;
+            if (Properties.Akbil.Default.BeniHatirla)
+            {
+                txtEmail.Text = Properties.Akbil.Default.BeniHatirlaKullaniciEmail;
+                txtSifre.Text = Properties.Akbil.Default.BeniHatirlaKullaniciSifre;
+                checkBoxHatirla.Checked = true;
+            }
         }
+
+
 
         private void btnKayitOl_Click(object sender, EventArgs e)
         {
@@ -59,7 +65,7 @@ namespace AkbilYonetimiUI
                     return;
                 }
                 //2)Girdiği email ve şifre veritabanında mevcut mu?
-                var kullanici =  context.Kullanicilars.FirstOrDefault(x=> x.Email == txtEmail.Text && x.Parola ==GenelIslemler.MD5Encryption(txtSifre.Text));
+                var kullanici = context.Kullanicilars.FirstOrDefault(x => x.Email == txtEmail.Text && x.Parola == GenelIslemler.MD5Encryption(txtSifre.Text));
                 if (kullanici == null)
                 {
                     MessageBox.Show("Email ya da şifrenizi yanlış girdiniz!");
@@ -72,6 +78,10 @@ namespace AkbilYonetimiUI
                     GenelIslemler.GirisYapanKullaniciEmail = kullanici.Email;
                     GenelIslemler.GirisYapanKullaniciAdSoyad = $"{kullanici.Ad} {kullanici.Soyad}";
                     //Beni hatırla settings ile olacak
+                    if (checkBoxHatirla.Checked)
+                    {
+                        BeniHatirlaAyarla();
+                    }
                     //temizlik
                     txtEmail.Clear(); txtSifre.Clear();
                     FrmAnasayfa frmAnasayfa = new FrmAnasayfa();
@@ -87,11 +97,32 @@ namespace AkbilYonetimiUI
                 MessageBox.Show($"Beklenmedik bir hata oluştu! " + hata.Message);
             }
         }
+        private void BeniHatirlaAyarla()
+        {
+            Properties.Akbil.Default.BeniHatirlaKullaniciEmail = txtEmail.Text.Trim();
+            Properties.Akbil.Default.BeniHatirlaKullaniciSifre = txtSifre.Text.Trim();
+            Properties.Akbil.Default.Save();
+
+        }
         private void txtSifre_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(Keys.Enter)) //basilan tuş enter ise giriş yapacak
             {
                 GirisYap();
+            }
+        }
+
+        private void checkBoxHatirla_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxHatirla.Checked)
+            {
+                Properties.Akbil.Default.BeniHatirla = true;
+                Properties.Akbil.Default.Save();
+            }
+            else
+            {
+                Properties.Akbil.Default.BeniHatirla = false;
+                Properties.Akbil.Default.Save();
             }
         }
     }
