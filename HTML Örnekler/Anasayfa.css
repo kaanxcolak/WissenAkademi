@@ -1,0 +1,58 @@
+nav a {
+    color: white !important;
+}
+
+#topLinks {
+    /* padding-top: 15px;
+    padding-bottom: 15px; */
+}
+
+#topLinks a {
+    margin-right: 10p;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#topLinks :nth-child(1) {
+    margin-left: 200px;
+}
+
+#topcontact a {
+    margin-right: 3px;
+    margin-left: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#topcontact {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#topmenu {
+    margin-top: 5px;
+    border: 1px solid gray;
+    margin-bottom: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#logosearch {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#toprightmenu a {
+    font-weight: bold;
+    text-align: center;
+    margin-right: 5px;
+    font-size: 14px;
+    color: black;
+    text-decoration: none;
+}
+
+#toprightmenu {
+    margin-top: 15px;
+    text-align: right;
+}
