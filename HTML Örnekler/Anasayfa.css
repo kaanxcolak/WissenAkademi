@@ -2,19 +2,19 @@ nav a {
     color: white !important;
 }
 
-#topLinks {
-    /* padding-top: 15px;
-    padding-bottom: 15px; */
+#toplinks {
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
-#topLinks a {
-    margin-right: 10p;
+#toplinks a {
+    margin-right: 10px;
     font-size: 12px;
     font-weight: bold;
     text-align: center;
 }
 
-#topLinks :nth-child(1) {
+#toplinks :nth-child(1) {
     margin-left: 200px;
 }
 
@@ -25,23 +25,7 @@ nav a {
     font-weight: bold;
 }
 
-#topcontact {
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-
-#topmenu {
-    margin-top: 5px;
-    border: 1px solid gray;
-    margin-bottom: 5px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-
-#logosearch {
-    margin-bottom: 10px;
-    margin-top: 10px;
-}
+#topcontact {}
 
 #toprightmenu a {
     font-weight: bold;
@@ -55,4 +39,17 @@ nav a {
 #toprightmenu {
     margin-top: 15px;
     text-align: right;
+}
+
+#topmenu {
+    margin-top: 5px;
+    border: 1px solid grey;
+    margin-bottom: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#logosearch {
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
