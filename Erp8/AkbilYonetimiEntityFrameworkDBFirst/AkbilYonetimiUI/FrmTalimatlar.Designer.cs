@@ -170,13 +170,13 @@
             contextMenuStrip1.ImageScalingSize = new Size(20, 20);
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { talimatiYukleToolStripMenuItem, talimatiIptalEtToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(186, 56);
+            contextMenuStrip1.Size = new Size(215, 84);
             // 
             // talimatiYukleToolStripMenuItem
             // 
             talimatiYukleToolStripMenuItem.Image = Properties.Resources.png_transparent_checkbox_computer_icons_green_tick_mark_text_trademark_logo;
             talimatiYukleToolStripMenuItem.Name = "talimatiYukleToolStripMenuItem";
-            talimatiYukleToolStripMenuItem.Size = new Size(185, 26);
+            talimatiYukleToolStripMenuItem.Size = new Size(214, 26);
             talimatiYukleToolStripMenuItem.Text = "Talimatı Yükle";
             talimatiYukleToolStripMenuItem.Click += talimatiYukleToolStripMenuItem_Click;
             // 
@@ -184,8 +184,9 @@
             // 
             talimatiIptalEtToolStripMenuItem.Image = Properties.Resources.png_transparent_wrong_incorrect_delete_abort_cancel_remove_red_small_mark_negative;
             talimatiIptalEtToolStripMenuItem.Name = "talimatiIptalEtToolStripMenuItem";
-            talimatiIptalEtToolStripMenuItem.Size = new Size(185, 26);
+            talimatiIptalEtToolStripMenuItem.Size = new Size(214, 26);
             talimatiIptalEtToolStripMenuItem.Text = "Talimatı İptal Et";
+            talimatiIptalEtToolStripMenuItem.Click += talimatiIptalEtToolStripMenuItem_Click_1;
             // 
             // groupBoxYukleme
             // 

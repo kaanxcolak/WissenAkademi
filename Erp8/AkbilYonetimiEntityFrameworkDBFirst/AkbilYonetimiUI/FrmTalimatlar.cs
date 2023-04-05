@@ -231,40 +231,7 @@ namespace AkbilYonetimiUI
                     lblBekleyenTalimat.ForeColor = Color.Red;
                 }
             }
-        }
-
-        private void talimatiIptalEtToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int sayac = 0;
-                foreach (DataGridViewRow item in dataGridViewTalimatlar.SelectedRows)
-                {
-                    //Yüklenmiş bir talimat iptal edilemez/silinemez.
-                    if ((bool)item.Cells["YuklendiMi"].Value)
-                    {
-                        MessageBox.Show($"DİKKAT! {item.Cells["Akbil"].Value} {item.Cells["YuklenecekTutar"].Value} liralık yüklemesi yapılmıştır. YÜKLENEN TALİMAT İPTAL EDİLEMEZ/SİLİNEMEZ! \nİşlemlerinize devam etmek için tamama basınız.");
-                        continue;
-                    } // if bitti
-
-                    var secilenTalimat = context.Talimatlars.FirstOrDefault(x => x.Id ==
-                    (int)item.Cells["Id"].Value);
-                    if (secilenTalimat != null)
-                    {
-                        context.Talimatlars.Remove(secilenTalimat);
-                        sayac += context.SaveChanges();
-                    }
-                } // foreach bitti
-
-                MessageBox.Show($"Seçtiğiniz {sayac} adet talimat iptal edilmiştir.");
-                TalimatlariDataGrideGetir(checkBoxTumunuGoster.Checked);
-                BekleyenTalimatSayisiniGetir();
-            }
-            catch (Exception hata)
-            {
-                MessageBox.Show("Beklenmedik bir sorun oluştu! " + hata.Message);
-            }
-        }
+        } 
 
         private void talimatiYukleToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -306,6 +273,39 @@ namespace AkbilYonetimiUI
             catch (Exception hata)
             {
                 MessageBox.Show("Beklenmedik bir hata oluştu! " + hata.Message);
+            }
+        }
+
+        private void talimatiIptalEtToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                int sayac = 0;
+                foreach (DataGridViewRow item in dataGridViewTalimatlar.SelectedRows)
+                {
+                    //Yüklenmiş bir talimat iptal edilemez/silinemez.
+                    if ((bool)item.Cells["YuklendiMi"].Value)
+                    {
+                        MessageBox.Show($"DİKKAT! {item.Cells["Akbil"].Value} {item.Cells["YuklenecekTutar"].Value} liralık yüklemesi yapılmıştır. YÜKLENEN TALİMAT İPTAL EDİLEMEZ/SİLİNEMEZ! \nİşlemlerinize devam etmek için tamama basınız.");
+                        continue;
+                    } // if bitti
+
+                    var secilenTalimat = context.Talimatlars.FirstOrDefault(x => x.Id ==
+                    (int)item.Cells["Id"].Value);
+                    if (secilenTalimat != null)
+                    {
+                        context.Talimatlars.Remove(secilenTalimat);
+                        sayac += context.SaveChanges();
+                    }
+                } // foreach bitti
+
+                MessageBox.Show($"Seçtiğiniz {sayac} adet talimat iptal edilmiştir.");
+                TalimatlariDataGrideGetir(checkBoxTumunuGoster.Checked);
+                BekleyenTalimatSayisiniGetir();
+            }
+            catch (Exception hata)
+            {
+                MessageBox.Show("Beklenmedik bir sorun oluştu! " + hata.Message);
             }
         }
     }
