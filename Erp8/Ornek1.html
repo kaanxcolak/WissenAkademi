@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Nesne Seçim Örneği</title>
+</head>
+<body onload="sayfaYuklendi()">
+    <h2>Nesne Seçim Örneği</h2>
+    <h4>Aşağıdaki textboxa yazdığınız mesajınız Gönder butonuna tıkladığında label'a aktarılacaktır'</h4>
+
+    <input type="text" id="txtMesaj" /> <br /> <br />
+    <input type="button" value="GÖNDER" id="btnGonder" name="" onclick="mesajGonder()" /><br /><br />
+    <label id="lblMesaj"></label> <br />
+    <span id="spanText"></span>
+    <script>
+        function sayfaYuklendi() {
+            alert("Hoşgeldiniz")
+            console.log("sayfa yüklendi")
+            document.getElementById("spanText").style.visibility = "hidden";
+        }//sayfaYuklendi fonk. Bitti
+
+        function mesajGonder() {
+            console.log('butona tıkladı');
+            var mesaj = document.getElementById('txtMesaj').value;
+
+            if (mesaj.length > 0) {
+                document.getElementById('lblMesaj').innerText = mesaj;
+                document.getElementById('spanText').style.visibility = "visible"
+                document.getElementById('spanText').innerText = mesaj;
+                document.getElementById('txtMesaj').value = "";
+            } else {
+                alert("Gönderilecek bir mesaj yazmalıyız!")
+            }
+        }
+
+    </script>
+
+</body>
+</html>
