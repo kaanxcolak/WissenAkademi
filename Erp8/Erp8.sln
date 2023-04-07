@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ornek01", "Ornek01", "{657E
 		Ornek1.html = Ornek1.html
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ornek2", "Ornek2", "{6C84C28A-9BA6-4B60-A36D-FFF3796655F8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ornek02", "Ornek02", "{6C84C28A-9BA6-4B60-A36D-FFF3796655F8}"
 	ProjectSection(SolutionItems) = preProject
 		Ornek2.html = Ornek2.html
 	EndProjectSection
