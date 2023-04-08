@@ -9,6 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pet Shop Website", "Pet Sho
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Css", "Css", "{9104037E-D40C-492C-B5FB-8C15C27BE0C4}"
+	ProjectSection(SolutionItems) = preProject
+		style.css = style.css
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Js", "Js", "{89BAE714-C1F3-4839-AC51-12CBB95D87B1}"
 EndProject
