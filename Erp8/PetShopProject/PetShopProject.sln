@@ -8,9 +8,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pet Shop Website", "Pet Sho
 		index.html = index.html
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Css", "Css", "{9104037E-D40C-492C-B5FB-8C15C27BE0C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Js", "Js", "{89BAE714-C1F3-4839-AC51-12CBB95D87B1}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9104037E-D40C-492C-B5FB-8C15C27BE0C4} = {95E1BB74-5DB4-4351-BE9D-97FC37A600C6}
+		{89BAE714-C1F3-4839-AC51-12CBB95D87B1} = {95E1BB74-5DB4-4351-BE9D-97FC37A600C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F2E41A6B-D4D5-4A77-9C66-43C7AAEB7F9F}
