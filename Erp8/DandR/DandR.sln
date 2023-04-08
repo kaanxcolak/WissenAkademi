@@ -8,6 +8,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "D&R Project", "D&R Project"
 		Anasayfa.html = Anasayfa.html
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Css", "Css", "{D8514B24-3D17-471D-8282-68F2113F8760}"
+	ProjectSection(SolutionItems) = preProject
+		Anasayfa.css = Anasayfa.css
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
