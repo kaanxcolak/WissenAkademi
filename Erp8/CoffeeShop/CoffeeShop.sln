@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoffeeShopProject", "CoffeeShopProject", "{C96B0E82-BF7F-4DB8-9FD7-B9B6984EE8F9}"
+	ProjectSection(SolutionItems) = preProject
+		index.html = index.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{0E3BDC24-6153-4CEE-82C2-B301A5C9497B}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0E3BDC24-6153-4CEE-82C2-B301A5C9497B} = {C96B0E82-BF7F-4DB8-9FD7-B9B6984EE8F9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24E81AA6-85BE-4994-9F46-A98D53ADCD39}
+	EndGlobalSection
+EndGlobal
