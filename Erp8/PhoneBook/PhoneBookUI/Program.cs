@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper.Extensions.ExpressionMapping;
+using Microsoft.EntityFrameworkCore;
 using PhoneBookDataLayer;
+using PhoneBookEntityLayer.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MyContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Local"));
+
+});
+
+builder.Services.AddAutoMapper(x=>
+{
+    //x.AddExpressionMapping();
+    x.AddProfile(typeof(Maps)); //Kimin kime dönüşeceğini Maps class'ı içinde tanımladık. Yaptığımız tanımlamayı ayarlara ekledik.4
+
+
 
 });
 
