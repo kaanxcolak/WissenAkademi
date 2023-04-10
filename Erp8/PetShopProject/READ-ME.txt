@@ -1,11 +1,24 @@
-  =>  Template Name    : PET SHOP - Pet Shop Website Template
+﻿  =>  Template Name    : PET SHOP - Pet Shop Website Template
 
   =>  Template Link    : https://htmlcodex.com/pet-shop-website-template
 
   =>  Template License : https://htmlcodex.com/license (or read the LICENSE.txt file)
 
-  =>  Template Author  : HTML Codex
+  
+Bu çalışmamda bir kayıt sayfası yapmayı amaçladım. Sade bir tasarım yaptım.  
 
-  =>  Author Website   : https://htmlcodex.com
 
-  =>  About HTML Codex : HTML Codex is one of the top creators and publishers of Free HTML templates, HTML landing pages, HTML email templates and HTML snippets in the world. Read more at ( https://htmlcodex.com/about-us )
+#PROJE HAKKINDA TEKNİK BİLGİLER:
+- HTML5 kullandım.
+- CSS için Bootstrap 5.2.1 kullandım.
+- Ekleme, Silme işlemlerini JQUERY ile yazdım
+- Sayfadaki aksiyonların sonuçlarıyla ilgili bilgi vermek için SweetAlert kullandım.
+
+Ekran resimleri ve kaynak kodlardan bir parça aşağıda görebilirsiniz.
+
+
+![01](https://user-images.githubusercontent.com/94163797/230551376-0a0ba71d-2a0c-4e45-9df3-fcc5f4a5bf62.png)
+![02](https://user-images.githubusercontent.com/94163797/230551379-fac7c800-6a43-46d3-a21c-4fa6cc0a2662.png)
+![03](https://user-images.githubusercontent.com/94163797/230551491-ed37a0dd-86d7-4a2c-97a4-23223171fc29.png)
+![04](https://user-images.githubusercontent.com/94163797/230551491-ed37a0dd-86d7-4a2c-97a4-23223171fc29.png)
+![05](https://user-images.githubusercontent.com/94163797/230551491-ed37a0dd-86d7-4a2c-97a4-23223171fc29.png)
