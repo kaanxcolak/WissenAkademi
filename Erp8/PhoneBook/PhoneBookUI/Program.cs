@@ -1,7 +1,19 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Microsoft.EntityFrameworkCore;
+using PhoneBookDataLayer;
+
+var builder = WebApplication.CreateBuilder(args);
+
+//context bilgisi eklenir
+builder.Services.AddDbContext<MyContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Local"));
+
+});
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 
 var app = builder.Build();
 
