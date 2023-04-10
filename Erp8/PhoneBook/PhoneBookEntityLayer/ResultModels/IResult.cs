@@ -8,7 +8,7 @@ namespace PhoneBookEntityLayer.ResultModels
 {
     public interface IResult
     {
-        bool isSuccess { get; set; }
+        bool IsSuccess { get; set; }
         string Message { get; set; }    
     }
 }
