@@ -16,3 +16,4 @@ Bu çalışmamda bir kayıt sayfası yapmayı amaçladım. Sade bir tasarım yap
 
 Ekran resimleri ve kaynak kodlardan bir parça aşağıda görebilirsiniz.
 
+
