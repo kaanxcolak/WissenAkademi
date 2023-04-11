@@ -84,7 +84,7 @@ namespace PhoneBookDataLayer.ImplementationsOfRepo
             return query.FirstOrDefault();//query'nin içinden ilk gelen datayı geri dönderir
         }
 
-    }
+    
 
     public T GetById(Id id)
     {
@@ -114,4 +114,5 @@ namespace PhoneBookDataLayer.ImplementationsOfRepo
             throw;
         }
     }
+}
 }
