@@ -31,9 +31,15 @@ builder.Services.AddControllersWithViews();
 
 //interfacelerin işlerini gerçekleştirecek classları burada yaşam döngülerini tanımlamalıyız
 builder.Services.AddScoped<IMemberRepository,MemberRepository>(); 
-
 builder.Services.AddScoped<IMemberManager,MemberManager>(); 
 builder.Services.AddScoped<IEmailSender,EmailSender>(); 
+
+
+builder.Services.AddScoped<IPhoneTypeRepository,PhoneTypeRepository>(); 
+builder.Services.AddScoped<IPhoneTypeManager,PhoneTypeManager>(); 
+
+builder.Services.AddScoped<IMemberPhoneRepository, MemberPhoneRepository>(); 
+builder.Services.AddScoped<IMemberPhoneManager, MemberPhoneManager>(); 
 
 var app = builder.Build();
 
