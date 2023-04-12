@@ -13,11 +13,11 @@ namespace PhoneBookBusinessLayer.EmailSenderBusiness
     {
         private readonly IConfiguration _configuration;
 
-        public  EmailSender(IConfiguration configuration)
+        public EmailSender(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        
+
         public string SenderMail => _configuration.GetSection("EmailOptions:SenderMail").Value;
         //public string SenderMail =>
         public string Password => _configuration.GetSection("EmailOptions:Password").Value;
@@ -25,7 +25,7 @@ namespace PhoneBookBusinessLayer.EmailSenderBusiness
         public int SmtpPort => Convert.ToInt32(_configuration.GetSection("EmailOptions:SmtpPort").Value);
         public string CCManagers => _configuration.GetSection("ProjectManagersEmails").Value;
 
-        private void MailInfoSet(EmailMessage message,out MailMessage mail, out SmtpClient client)
+        private void MailInfoSet(EmailMessage message, out MailMessage mail, out SmtpClient client)
         {
             try
             {
@@ -52,11 +52,18 @@ namespace PhoneBookBusinessLayer.EmailSenderBusiness
                         mail.Bcc.Add(item);
                     }
                 }
-                foreach (var item in CCManagers.Split(","))
+
+                if (CCManagers != null && CCManagers.Length >0)
                 {
-                    mail.CC.Add(item);
+                    foreach (var item in CCManagers.Split(","))
+                    {
+                        mail.CC.Add(item);
+                    }
+
                 }
-                
+
+
+
 
 
 
@@ -69,7 +76,7 @@ namespace PhoneBookBusinessLayer.EmailSenderBusiness
                 client = new SmtpClient(Smtp, SmtpPort)
                 {
                     EnableSsl = true,
-                    Credentials = new NetworkCredential(SenderMail,Password) //emaile girebilmek için kullanıcı adı ve parolası gerekli
+                    Credentials = new NetworkCredential(SenderMail, Password) //emaile girebilmek için kullanıcı adı ve parolası gerekli
 
                 };
             }
@@ -87,7 +94,7 @@ namespace PhoneBookBusinessLayer.EmailSenderBusiness
         {
             try
             {
-                MailInfoSet(message,out MailMessage mail, out SmtpClient client);
+                MailInfoSet(message, out MailMessage mail, out SmtpClient client);
                 client.Send(mail);
                 return true;
             }
@@ -104,7 +111,7 @@ namespace PhoneBookBusinessLayer.EmailSenderBusiness
             {
                 MailInfoSet(message, out MailMessage mail, out SmtpClient client);
                 await client.SendMailAsync(mail);
-                
+
             }
             catch (Exception)
             {

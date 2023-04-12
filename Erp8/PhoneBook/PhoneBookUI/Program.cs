@@ -1,4 +1,5 @@
 ﻿using AutoMapper.Extensions.ExpressionMapping;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using PhoneBookBusinessLayer.EmailSenderBusiness;
 using PhoneBookBusinessLayer.ImplementationsOfManagers;
@@ -14,12 +15,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MyContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Local"));
-
 });
 
+//CookieAuthentication ayarı eklendi
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 builder.Services.AddAutoMapper(x=>
 {
-    //x.AddExpressionMapping();
+    x.AddExpressionMapping();
     x.AddProfile(typeof(Maps)); //Kimin kime dönüşeceğini Maps class'ı içinde tanımladık. Yaptığımız tanımlamayı ayarlara ekledik.
 });
 
@@ -42,8 +44,9 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseStaticFiles(); //wwwroot klasörünü görmesi için
 
-app.UseRouting(); // /home/indexe gidebilmesi iiçin
+app.UseRouting(); //browserdaki url için /home/indexe gidebilmesi için
 
+app.UseAuthentication(); //Login ve logout işlemlerimiz için     ->>Sıralama önemli
 app.UseAuthorization(); //Yetkilendirme için
 
 app.MapControllerRoute(

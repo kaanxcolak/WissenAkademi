@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PhoneBookDataLayer.InterfacesOfRepo;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhoneBookDataLayer.ImplementationsOfRepo
 {
@@ -14,9 +9,8 @@ namespace PhoneBookDataLayer.ImplementationsOfRepo
         protected readonly MyContext _context;
         public Repository(MyContext context)
         {
-            _context = context; //DI
+            _context = context; //DI dependencie injection
         }
-
         public int Add(T entity)
         {
             try
@@ -24,9 +18,8 @@ namespace PhoneBookDataLayer.ImplementationsOfRepo
                 _context.Set<T>().Add(entity);
                 return _context.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
                 throw;
             }
         }
@@ -38,81 +31,90 @@ namespace PhoneBookDataLayer.ImplementationsOfRepo
                 _context.Set<T>().Remove(entity);
                 return _context.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw;
+            }
+        }
 
+        public IQueryable<T> GetAll(Expression<Func<T, bool>>? filter = null, string[]? includeRelationalTables = null)
+        {
+            try
+            {
+                //select * from TabloAdı
+                IQueryable<T> query = _context.Set<T>();
+                if (filter != null)
+                {
+                    //Eğer koşul verdiyse select * from tabloAdi where koşul/koşullar.
+                    query = query.Where(filter);
+                }
+                if (includeRelationalTables != null)
+                {
+                    //ilişkiliTabloAdi1, ilişkiliTabloADi2,....
+                    foreach (var item in includeRelationalTables)
+                    {
+                        query = query.Include(item); //join yapar
+                    }
+                }
+                return query;
+            }
+            catch (Exception ex)
+            {
                 throw;
             }
         }
 
 
-
-        public IQueryable<T> GetAll(Expression<Func<T, bool>>? filter, string[]? includeRelationalTables)
-        {
-            //select* from TabloAdi
-            IQueryable<T> query = _context.Set<T>();
-            if (filter != null)
-            {
-                //Eğer koşul verdiyse select * from TabloAdi where koşul/lar
-                query = query.Where(filter);
-            }
-            if (includeRelationalTables != null)
-            {
-                foreach (var item in includeRelationalTables)
-                {
-                    query = query.Include(item); //join yapıyor
-                }
-            }
-            return query;
-        }
         public T GetByConditions(Expression<Func<T, bool>>? filter = null, string[]? includeRelationalTables = null)
         {
-            //select* from TabloAdi
-            IQueryable<T> query = _context.Set<T>();
-            if (filter != null)
+            try
             {
-                //Eğer koşul verdiyse select * from TabloAdi where koşul/lar
-                query = query.Where(filter);
-            }
-            if (includeRelationalTables != null)
-            {
-                foreach (var item in includeRelationalTables)
+                //select * from TabloAdı
+                IQueryable<T> query = _context.Set<T>();
+                if (filter != null)
                 {
-                    query = query.Include(item); //join yapıyor
+                    //Eğer koşul verdiyse select * from tabloAdi where koşul/koşullar.
+                    query = query.Where(filter);
                 }
+                if (includeRelationalTables != null)
+                {
+                    //ilişkiliTabloAdi1, ilişkiliTabloADi2,....
+                    foreach (var item in includeRelationalTables)
+                    {
+                        query = query.Include(item); //join yapar
+                    }
+                }
+                return query.FirstOrDefault();
             }
-            return query.FirstOrDefault();//query'nin içinden ilk gelen datayı geri dönderir
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-    
-
-    public T GetById(Id id)
-    {
-        try
+        public T GetById(Id id)
         {
-            return _context.Set<T>().Find(id);
-        }
-        catch (Exception)
-        {
-
-            throw;
+            try
+            {
+                return _context.Set<T>().Find(id);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-
-    }
-
-    public int Update(T entity)
-    {
-        try
+        public int Update(T entity)
         {
-            _context.Set<T>().Update(entity);
-            return _context.SaveChanges();
-        }
-        catch (Exception)
-        {
-
-            throw;
+            try
+            {
+                _context.Set<T>().Update(entity);
+                return _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
-}
 }
