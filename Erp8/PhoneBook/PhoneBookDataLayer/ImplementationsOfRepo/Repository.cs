@@ -1,15 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PhoneBookDataLayer.InterfacesOfRepo;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PhoneBookDataLayer.ImplementationsOfRepo
 {
-    public class Repository<T, Id> : IRepository<T, Id> where T : class, new()
+    public class Repository<T, Id> : IRepository<T, Id>
+        where T : class, new()
     {
         protected readonly MyContext _context;
         public Repository(MyContext context)
         {
-            _context = context; //DI dependencie injection
+            _context = context; // DI dependencie injection
         }
         public int Add(T entity)
         {
@@ -18,12 +24,12 @@ namespace PhoneBookDataLayer.ImplementationsOfRepo
                 _context.Set<T>().Add(entity);
                 return _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+
                 throw;
             }
         }
-
         public int Delete(T entity)
         {
             try
@@ -31,8 +37,9 @@ namespace PhoneBookDataLayer.ImplementationsOfRepo
                 _context.Set<T>().Remove(entity);
                 return _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+
                 throw;
             }
         }
@@ -41,78 +48,86 @@ namespace PhoneBookDataLayer.ImplementationsOfRepo
         {
             try
             {
-                //select * from TabloAdı
+                //select * from TabloAdi
                 IQueryable<T> query = _context.Set<T>();
+
                 if (filter != null)
                 {
-                    //Eğer koşul verdiyse select * from tabloAdi where koşul/koşullar.
-                    query = query.Where(filter);
+                    query = query.Where(filter);   //select * from TabloAdi where koşul/lar
                 }
+
                 if (includeRelationalTables != null)
                 {
-                    //ilişkiliTabloAdi1, ilişkiliTabloADi2,....
                     foreach (var item in includeRelationalTables)
                     {
-                        query = query.Include(item); //join yapar
+                        query = query.Include(item); // join yapıyor
                     }
                 }
+
                 return query;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+
                 throw;
             }
         }
-
 
         public T GetByConditions(Expression<Func<T, bool>>? filter = null, string[]? includeRelationalTables = null)
         {
             try
             {
-                //select * from TabloAdı
+                //select * from TabloAdi
                 IQueryable<T> query = _context.Set<T>();
+
                 if (filter != null)
                 {
-                    //Eğer koşul verdiyse select * from tabloAdi where koşul/koşullar.
-                    query = query.Where(filter);
+                    query = query.Where(filter);   //select * from TabloAdi where koşul/lar
                 }
+
                 if (includeRelationalTables != null)
                 {
-                    //ilişkiliTabloAdi1, ilişkiliTabloADi2,....
                     foreach (var item in includeRelationalTables)
                     {
-                        query = query.Include(item); //join yapar
+                        query = query.Include(item); // join yapıyor
                     }
                 }
-                return query.FirstOrDefault();
+
+                return query.FirstOrDefault(); // query'nin içinden ilk gelen datayı geri gönderir.
+
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+
                 throw;
             }
         }
 
         public T GetById(Id id)
         {
+
             try
             {
                 return _context.Set<T>().Find(id);
+
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+
                 throw;
             }
         }
-
         public int Update(T entity)
         {
+
             try
             {
                 _context.Set<T>().Update(entity);
                 return _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+
                 throw;
             }
         }

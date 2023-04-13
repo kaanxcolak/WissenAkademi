@@ -22,6 +22,13 @@ namespace PhoneBookUI.Controllers
 
         public IActionResult Index()
         {
+            //Eğer giriş yapmış ise giriş yapan kullanıcının rehberini model olarak sayfaya gönderelim
+            if (HttpContext.User.Identity?.Name !=null)
+            {
+                var userEmail = HttpContext.User.Identity?.Name;
+                var data = _memberPhoneManager.GetAll(x => x.MemberId == userEmail).Data;
+                return View(data);
+            }
             return View();
         }
 
@@ -72,7 +79,7 @@ namespace PhoneBookUI.Controllers
                 //1)Aynı telefondan var mı ?
                 var samePhone = _memberPhoneManager.GetByConditions
                     (x => x.MemberId == model.MemberId && x.Phone == model.Phone).Data;
-                if (ModelState.IsValid) { samePhone != null}
+                if (samePhone != null)
                 {
                     ModelState.AddModelError("", $"Bu telefon {samePhone.PhoneType.Name} türünde zaten eklenmiştir");
                     return View();
