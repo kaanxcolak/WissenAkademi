@@ -97,6 +97,7 @@ namespace PhoneBookUI.Controllers
                 //Diğer seçeneğinin senaryosunu yarın yazacağız.
                 model.CreatedDate = DateTime.Now;
                 model.IsRemoved = false;
+                model.Phone = model.CountryCode + model.Phone;
 
                 if (!_memberPhoneManager.Add(model).IsSuccess)
                 {
@@ -179,6 +180,43 @@ namespace PhoneBookUI.Controllers
                 return Json(new { isSuccess = false, message = $"Beklenmedik bir hata oluştu! {ex.Message}" });
             }
 
+        }
+
+        [HttpGet]
+        public IActionResult EditPhone(int id)
+        {
+            try
+            {
+                //zaman azaldığı için buraya if yazıp id'yi kontrol etmedim
+                var phone = _memberPhoneManager.GetById(id).Data;
+                return View(phone);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Beklenmedik hata" + ex.Message);
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult EditPhone(MemberPhoneViewModel model)
+        {
+            try
+            {
+                //zaman yok if ile kontrol etmeden yazılacak
+                var phone = _memberPhoneManager.GetById(model.Id).Data;
+                phone.Phone = model.Phone;
+                phone.FriendNameSurname = model.FriendNameSurname;
+
+                _memberPhoneManager.Update(phone);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Beklenmedik hata" + ex.Message);
+                return View(model);
+            }
         }
     }
 }

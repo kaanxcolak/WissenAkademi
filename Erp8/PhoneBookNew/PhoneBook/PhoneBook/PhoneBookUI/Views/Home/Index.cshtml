@@ -12,7 +12,6 @@
         @TempData["AddPhoneSuccessMsg"]
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-
 }
 
 @if (TempData["DeleteFailedMsg"] != null)
@@ -23,7 +22,6 @@
         @TempData["DeleteFailedMsg"]
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-
 }
 
 @if (TempData["DeleteSuccessMsg"] != null)
@@ -34,17 +32,15 @@
         @TempData["DeleteSuccessMsg"]
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-
 }
 
 
 
 <div>
-    <a class="btn btn-primary" asp-controller="Home" asp-action="AddPhone">
+    <a class="btn btn-primary" asp-controller="Home"
+       asp-action="AddPhone">
         Yeni Telefon Ekle
-
     </a>
-
 
 </div>
 <br />
@@ -52,12 +48,11 @@
 <div class="row">
     @if (Context.User.Identity?.Name == null)
     {
-        <p>Buraya resim ya da içeriğe dair tasarım gelecektir</p>
+        <p> Buraya resim ya da içeriğe dair tasarım gelecektir </p>
     }
     else if (Model.Count == 0)
     {
-        <h4>Rehberinizde henüz kimse yoktur.Yeni numara eklediğinizde burada listelenecektir.</h4>
-
+        <h4>Rehberinizde henüz kimse yoktur. Yeni numara eklediğinizde burada listelenecektir.</h4>
     }
     else
     {
@@ -67,20 +62,17 @@
                 <tr>
                     <th>Sıra No</th>
                     <th>Eklendiği Tarih</th>
-                    <th>Kategorisi</th>
+                    <th>Kategori</th>
                     <th>İsim Soyisim</th>
                     <th>Telefon</th>
                     <th>İşlemler</th>
-
                 </tr>
-
-
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td><b>@(counter += 1)</b></td>
+                        <td><b>@(counter += 1)</b> </td>
                         <td>
                             @item.CreatedDate.ToString("dd/MM/yyyy")
                         </td>
@@ -88,38 +80,18 @@
                         <td>@item.FriendNameSurname</td>
                         <td>@item.Phone</td>
                         <td>
-                            <a class="btn btn-primary btn-sm"
-                               href="/Home/EditPhone/@item.Id">
-                                Düzenle
-                            </a>
+                            <a class="btn btn-primary btn-sm" style="margin-right:3px;" href="/Home/EditPhone/@item.Id">Düzenle</a>
 
-                            <a class="btn btn-danger btn-sm"
-                       asp-controller="Home" asp-action="DeletePhone"
-                       asp-route-id="@item.Id">
-                                Sil
-                            </a>
-                            <a class="btn btn-info btn-sm"
-                               onclick="deletePhone(@item.Id)">
-                                AJAX ile Sil
-                            </a>
+                            <a class="btn btn-danger btn-sm" asp-controller="Home" asp-action="DeletePhone" asp-route-id="@item.Id">Sil</a>
 
-
+                            <a class="btn btn-info btn-sm" onclick="deletePhone(@item.Id)">AJAX ile Sil</a>
                         </td>
-
-
-
                     </tr>
-
-
                 }
-
-
             </tbody>
-
-
-
         </table>
     }
+
 </div>
 
 @section Scripts{
@@ -128,43 +100,62 @@
         function deletePhone(id) {
             $.ajax({
                 contentType: 'application/json; charset=utf-8',
-                type: 'post',  //type GET, POST olabilir.
+                type: 'Post', // type GET, POST olabilir
                 url: '/Home/PhoneDelete',
-                data: JSON.stringify(id),  //data sadece type:post oldugunda kullanılır.
+                data: JSON.stringify(id), // {id:2} // type:Get olursa bu satırı yazmayız
                 datatype: 'json',
                 success: function (response) {
-                    alert("Silindi!")
+                    alert("silindi");
 
-                    //window.open("/Home/Index",target:"_self"); SAYFAYI YENİLİYOR.
+                    // window.open("/Home/Index", target: "_self"); bunu kullanamayız çünkü bu komut sayfayı yeniliyor
 
-                    $("phoneTable > tbody ").html('');
-                    var row = "<tr>";
+                    $("#phoneTable > tbody").html('');
+                    var row = "";
                     var counter = 0;
 
                     console.log(response);
                     $.each(response.phones, function () {
-                        row += "<td><b>" + (counter += 1) + "</b></td>";
-                        row += "<td>" + this.createdDate + "</td>"
-                        row += "<td>" + this.phoneType.name + "</td>"
-                        row += "<td>" + this.friendNameSurname + "</td>"
-                        row += "<td>" + this.phone + "</td>"
+                        row += "<tr><td><b>" + (counter += 1) + "</b></td>";
+                        var phoneDate = new Date(this.createdDate);
+                        var day = phoneDate.getDate();
+                        var month = phoneDate.getMonth() + 1;
+                        var year = phoneDate.getFullYear();
+
+                        if (day < 10) {
+                            day = '0' + day;
+                        }
+                        if (month < 10) {
+                            month = '0' + month;
+                        }
+                        var date = day + "." + month + "." + year;
+
+                        row += "<td>" + date + "</td>";
+                        row += "<td>" + this.phoneType.name + "</td>";
+                        row += "<td>" + this.friendNameSurname + "</td>";
+                        row += "<td>" + this.phone + "</td>";
+                        row += "<td>";
+
+                        row += "<a  style='margin - right: 3px; ' class='btn btn-primary btn-sm' href = '/Home/EditPhone/" + this.id + "'> Düzenle</a>";
+
+                        row += "<a  style='margin - right: 3px; ' class='btn btn-danger btn-sm' asp-controller='Home' asp-action='DeletePhone' asp-route-id=" + this.id + ">Sil</a> ";
+
+                        row += "<a class='btn btn-info btn-sm' onclick = 'deletePhone(" + this.id + ")'> AJAX ile Sil</a>";
 
 
+                        row += "</td></tr>";
+                    }); // $.each döngüsü burada bitti.
 
-
-                    };    //$.each burada bitti.
-                    $("phoneTable > tbody ").append(row); //.html deneyelim.
-
-
+                    $("#phoneTable > tbody").append(row); // .hmtl'yi deneyelim
                 },
                 error: function (response) {
                     alert(response.message);
-
                 }
 
-            }); //ajax burda bitti.
+            }); // ajax burada bitti
 
-        }   //deletePhone fonk. burada bitti.
+
+        } //deletePhone fonk. burada bitti
+
 
     </script>
 }

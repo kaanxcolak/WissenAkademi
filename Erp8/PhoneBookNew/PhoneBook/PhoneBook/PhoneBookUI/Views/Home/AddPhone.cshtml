@@ -23,14 +23,22 @@
 
             <div class="form-group">
                 <label>İsim Soyisim:</label>
-                <input type="text" class="form-control" asp-for="FriendNameSurname"
-                       required />
+                <input type="text" class="form-control" asp-for="FriendNameSurname" required />
             </div> <br />
-
-            <div class="form-group">
+            <div class="form-group row">
                 <label>Telefon:</label>
-                <input type="text" class="form-control" asp-for="Phone"
-                       required />
+                <div class="col-3">
+                    <select class="form-control" asp-for="CountryCode">
+                        <option value="+90">+90 TR</option>
+                        <option value="+01">+01 USA</option>
+                        <option value="+44">+44 UK</option>
+                    </select>
+                </div>
+                <div class="col-9">
+
+                    <input type="text" class="form-control" asp-for="Phone"
+                           required />
+                </div>
             </div> <br />
 
             <div class="form-group">
