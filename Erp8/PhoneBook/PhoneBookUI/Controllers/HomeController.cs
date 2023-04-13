@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Common;
 using PhoneBookBusinessLayer.InterfacesOfManagers;
+using PhoneBookEntityLayer.Entities;
 using PhoneBookEntityLayer.ViewModels;
 using PhoneBookUI.Models;
 using System.Diagnostics;
 
 namespace PhoneBookUI.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -23,12 +26,14 @@ namespace PhoneBookUI.Controllers
         public IActionResult Index()
         {
             //Eğer giriş yapmış ise giriş yapan kullanıcının rehberini model olarak sayfaya gönderelim
-            if (HttpContext.User.Identity?.Name !=null)
+            if (HttpContext.User.Identity?.Name != null)
             {
                 var userEmail = HttpContext.User.Identity?.Name;
-                var data = _memberPhoneManager.GetAll(x => x.MemberId == userEmail).Data;
+                var data = _memberPhoneManager.GetAll(x =>
+                x.MemberId == userEmail).Data;
                 return View(data);
             }
+
             return View();
         }
 
@@ -43,24 +48,26 @@ namespace PhoneBookUI.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+
         [HttpGet]
-        [Authorize] //authorize login olmadan sayfaya erişimi önler 
+        [Authorize] // authorize login olmadan sayfaya erişimi önler
         public IActionResult AddPhone()
         {
             try
             {
-                ViewBag.PhoneTypes = _phoneTypeManager.GetAll().Data; //not: IsRemoved viewModelin içine eklensin
+                ViewBag.PhoneTypes = _phoneTypeManager.GetAll().Data; // not IsRemoved viewmodelin içine eklensin
                 MemberPhoneViewModel model = new MemberPhoneViewModel()
                 {
                     MemberId = HttpContext.User.Identity?.Name
                 };
-                return View();
+                return View(model);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", "Beklenmedik bir hata oluştu!" + ex.Message);
                 ViewBag.PhoneTypes = new List<PhoneTypeViewModel>();
                 return View();
+
             }
         }
 
@@ -70,32 +77,34 @@ namespace PhoneBookUI.Controllers
         {
             try
             {
-                ViewBag.PhoneTypes = _phoneTypeManager.GetAll().Data; //not: IsRemoved viewModelin içine eklensin
+                ViewBag.PhoneTypes = _phoneTypeManager.GetAll().Data; // not IsRemoved viewmodelin içine eklensin
                 if (!ModelState.IsValid)
                 {
-                    //Gerekli alanları doldurunuzu bu sefer yazmadık
+                    //Gerekli alanaları doldurunuzu bu sefer yazmadıkkk 
                     return View(model);
                 }
-                //1)Aynı telefondan var mı ?
-                var samePhone = _memberPhoneManager.GetByConditions
-                    (x => x.MemberId == model.MemberId && x.Phone == model.Phone).Data;
+                //1) Aynı telefondan var mı?
+                var samePhone = _memberPhoneManager.GetByConditions(x =>
+                x.MemberId == model.MemberId && x.Phone == model.Phone).Data;
                 if (samePhone != null)
                 {
-                    ModelState.AddModelError("", $"Bu telefon {samePhone.PhoneType.Name} türünde zaten eklenmiştir");
-                    return View();
+                    ModelState.AddModelError("", $"Bu telefon {samePhone.PhoneType.Name} türünde zaten eklenmiştir!");
+                    return View(model);
                 }
+
+
                 //2) Telefonu ekle
-                //Diğer seçeneğinin senaryounu yarın yazacağız.
+                //Diğer seçeneğinin senaryosunu yarın yazacağız.
                 model.CreatedDate = DateTime.Now;
                 model.IsRemoved = false;
+
                 if (!_memberPhoneManager.Add(model).IsSuccess)
                 {
-                    ModelState.AddModelError("", "Ekleme Başarısız! Tekrar deneyiniz.");
-                    ViewBag.PhoneTypes = new List<PhoneTypeViewModel>();
-                    return View();
+                    ModelState.AddModelError("", "EKLEME BAŞARISIZ! TEKRAR DENEYİNİZ!");
+                    return View(model);
                 }
-                TempData["AddPhoneSuccessMsg"] = $"Yeni numara telefona eklendi";
-                return RedirectToAction("index", "Home");
+                TempData["AddPhoneSuccessMsg"] = "Yeni numara rehbere eklendi";
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
@@ -104,5 +113,37 @@ namespace PhoneBookUI.Controllers
                 return View();
             }
         }
+
+        [Authorize]
+        public IActionResult DeletePhone(int id)
+        {
+            try
+            {
+                if (id<=0)
+                {
+                    TempData["DeleteFailedMsg"] = $"id değeri düzgün değil!";
+                    return RedirectToAction("Index", "Home");
+                }
+                var phone = _memberPhoneManager.GetById(id).Data;
+                if (phone == null)
+                {
+                    TempData["DeleteFailedMsg"] = $"Kayıt bulunamadığı için silme başarısızdır!";
+                    return RedirectToAction("Index", "Home");
+                }
+                if (!_memberPhoneManager.Delete(phone).IsSuccess)
+                {
+                    TempData["DeleteFailedMsg"] = $"Silme başarısızdır!";
+                    return RedirectToAction("Index", "Home");
+                }
+                TempData["DeleteFailedMsg"] = $"Telefon rehberden silindi";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                TempData["DeleteFailedMsg"] = $"Beklenmedik bir hata oldu! {ex.Message}";
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
     }
 }

@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PhoneBookBusinessLayer\PhoneBookBusinessLayer.csproj" />
+    <ProjectReference Include="..\..\..\..\yeee\PhoneBook-master\PhoneBook-master\PhoneBookBusinessLayer\PhoneBookBusinessLayer.csproj" />
     <ProjectReference Include="..\PhoneBookDataLayer\PhoneBookDataLayer.csproj" />
   </ItemGroup>
 
