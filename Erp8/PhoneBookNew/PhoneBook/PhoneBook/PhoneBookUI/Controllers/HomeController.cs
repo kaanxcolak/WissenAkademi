@@ -55,7 +55,14 @@ namespace PhoneBookUI.Controllers
         {
             try
             {
-                ViewBag.PhoneTypes = _phoneTypeManager.GetAll().Data; // not IsRemoved viewmodelin içine eklensin
+                var phoneTypes = _phoneTypeManager.GetAll().Data;
+                ViewBag.PhoneTypes = phoneTypes; // not IsRemoved viewmodelin içine eklensin
+                ViewBag.FirstPhoneTypeId = -1;
+                if (phoneTypes.Count > 0)
+                {
+                    ViewBag.FirstPhoneTypeId = phoneTypes.FirstOrDefault()?.Id;
+                }
+
                 MemberPhoneViewModel model = new MemberPhoneViewModel()
                 {
                     MemberId = HttpContext.User.Identity?.Name
@@ -98,6 +105,7 @@ namespace PhoneBookUI.Controllers
                 model.CreatedDate = DateTime.Now;
                 model.IsRemoved = false;
                 model.Phone = model.CountryCode + model.Phone;
+
 
                 if (!_memberPhoneManager.Add(model).IsSuccess)
                 {
@@ -151,7 +159,7 @@ namespace PhoneBookUI.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost] // FromQueryli halini yazalım
         public JsonResult PhoneDelete([FromBody] int id)
         {
             try
@@ -171,8 +179,10 @@ namespace PhoneBookUI.Controllers
                     return Json(new { isSuccess = false, message = $"Silme başarısızdır!" });
                 }
                 var userEmail = HttpContext.User.Identity?.Name;
-                var data = _memberPhoneManager.GetAll(x => x.MemberId == userEmail).Data;
-                return Json(new { isSuccess = true, message = $"Telefon rehberden silindi!",phones = data });
+                var data = _memberPhoneManager.GetAll(x =>
+                x.MemberId == userEmail).Data;
+
+                return Json(new { isSuccess = true, message = $"Telefon rehberden silindi!", phones = data });
 
             }
             catch (Exception ex)
@@ -182,12 +192,14 @@ namespace PhoneBookUI.Controllers
 
         }
 
+
         [HttpGet]
+        [Authorize]
         public IActionResult EditPhone(int id)
         {
             try
             {
-                //zaman azaldığı için buraya if yazıp id'yi kontrol etmedim
+                // zaman azaldığı için buraya if yazıp id'yi kontrol etmedim
                 var phone = _memberPhoneManager.GetById(id).Data;
                 return View(phone);
             }
@@ -204,7 +216,7 @@ namespace PhoneBookUI.Controllers
         {
             try
             {
-                //zaman yok if ile kontrol etmeden yazılacak
+                //zaman az olduğu için if ile kontrol etmeden yazacağım
                 var phone = _memberPhoneManager.GetById(model.Id).Data;
                 phone.Phone = model.Phone;
                 phone.FriendNameSurname = model.FriendNameSurname;
@@ -215,7 +227,7 @@ namespace PhoneBookUI.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", "Beklenmedik hata" + ex.Message);
-                return View(model);
+                return View();
             }
         }
     }
