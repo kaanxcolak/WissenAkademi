@@ -17,15 +17,16 @@ namespace PhoneBookEntityLayer.ViewModels
         [Required]
         [StringLength(50, MinimumLength = 5)]
         [RegularExpression(@"^([a-zA-zğüşöçıİĞÜŞÖÇ]+\s+[a-zA-zğüşöçıİĞÜŞÖÇ]*)*$", ErrorMessage = "İsim Soyisimde harf dışında karakter olamaz!")]
+        [Display(Name = "İsim Soyisim")]
         public string FriendNameSurname { get; set; }
-        public byte PhoneTypeId { get; set; } 
+        public byte PhoneTypeId { get; set; }
         [Required]
         [StringLength(10, MinimumLength = 10)]
-
         [RegularExpression("^[0-9]*", ErrorMessage = "Telefon rakamlardan oluşmalıdır")]
+        [Display(Name = "Telefon")]
         public string Phone { get; set; } //+905396796650
-        public string MemberId { get; set; } 
-        public  PhoneType? PhoneType { get; set; }
+        public string MemberId { get; set; }
+        public PhoneType? PhoneType { get; set; }
         public Member? Member { get; set; }
         public string? CountryCode { get; set; }
         public string? AnotherPhoneTypeName { get; set; }
