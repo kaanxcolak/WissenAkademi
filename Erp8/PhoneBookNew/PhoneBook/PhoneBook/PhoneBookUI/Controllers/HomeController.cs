@@ -90,6 +90,8 @@ namespace PhoneBookUI.Controllers
                     //Gerekli alanaları doldurunuzu bu sefer yazmadıkkk 
                     return View(model);
                 }
+
+                model.Phone = model.CountryCode + model.Phone;
                 //1) Aynı telefondan var mı?
                 var samePhone = _memberPhoneManager.GetByConditions(x =>
                 x.MemberId == model.MemberId && x.Phone == model.Phone).Data;
@@ -98,13 +100,31 @@ namespace PhoneBookUI.Controllers
                     ModelState.AddModelError("", $"Bu telefon {samePhone.PhoneType.Name} türünde zaten eklenmiştir!");
                     return View(model);
                 }
+                if (model.AnotherPhoneTypeName != null)
+                {//Eğer AnotherPhoneTypeName null değil ise Diğer seçeneğini seçmiştir
 
+                    //Diğeri seçip veritabanında zaten mevcut olan türü yazarsa?
+                    var samePhoneType = _phoneTypeManager.GetByConditions(x => x.Name.ToLower() == model.AnotherPhoneTypeName.ToLower()).Data;
+                    if (samePhoneType != null)
+                    {
+                        ModelState.AddModelError("", $"{samePhoneType.Name} zaten mevcuttur! Türlerden seçerek rehbere eklemeyi tekrar deneyiniz!");
+                        return View(model);
+                    }
+
+                    //Diğer ile yazdığı türü ekledik ve id'sini aldık
+                    PhoneTypeViewModel phoneType = new PhoneTypeViewModel()
+                    {
+                        CreatedDate = DateTime.Now,
+                        Name = model.AnotherPhoneTypeName
+                    };
+                    var result = _phoneTypeManager.Add(phoneType).Data;
+                    model.PhoneTypeId = result.Id;
+                } //if bitti
 
                 //2) Telefonu ekle
                 //Diğer seçeneğinin senaryosunu yarın yazacağız.
                 model.CreatedDate = DateTime.Now;
                 model.IsRemoved = false;
-                model.Phone = model.CountryCode + model.Phone;
 
 
                 if (!_memberPhoneManager.Add(model).IsSuccess)
@@ -199,8 +219,22 @@ namespace PhoneBookUI.Controllers
         {
             try
             {
-                // zaman azaldığı için buraya if yazıp id'yi kontrol etmedim
+                ViewBag.PhoneTypes = _phoneTypeManager.GetAll().Data;
+                if (id <= 0)
+                {
+                    ModelState.AddModelError("", "id değeri sıfırdan küçük olamaz!");
+                    return View();
+                }
+
                 var phone = _memberPhoneManager.GetById(id).Data;
+                if (phone == null)
+                {
+                    ModelState.AddModelError("", "Kayıt bulunamadı!");
+                    return View();
+                }
+                var country = phone.Phone.Substring(0, 3);
+                phone.CountryCode = country;
+                phone.Phone = phone.Phone.Substring(3);
                 return View(phone);
             }
             catch (Exception ex)
@@ -216,13 +250,39 @@ namespace PhoneBookUI.Controllers
         {
             try
             {
-                //zaman az olduğu için if ile kontrol etmeden yazacağım
-                var phone = _memberPhoneManager.GetById(model.Id).Data;
-                phone.Phone = model.Phone;
-                phone.FriendNameSurname = model.FriendNameSurname;
+                ViewBag.PhoneTypes = _phoneTypeManager.GetAll().Data;
 
-                _memberPhoneManager.Update(phone);
-                return RedirectToAction("Index", "Home");
+                var phone = _memberPhoneManager.GetById(model.Id).Data;
+                if (phone == null)
+                {
+                    ModelState.AddModelError("", "Kayıt bulunmadı!");
+                    return View(model);
+                }
+
+                //Var olan bir telefonu mu yazmış?
+                var samePhone = _memberPhoneManager.GetByConditions(
+                    x => x.Id != model.Id && x.MemberId == HttpContext.User.Identity.Name && x.Phone ==(model.CountryCode + model.Phone)).Data;
+
+                if (samePhone != null)
+                {
+                    ModelState.AddModelError("", $"{model.Phone} şeklindeki telefon {samePhone.FriendNameSurname} adlı kişiye aittir! Lütfen numarayı kontrol ediniz!");
+                    return View(model);
+                }
+
+                phone.Phone =model.CountryCode + model.Phone;
+                phone.FriendNameSurname = model.FriendNameSurname;
+                phone.PhoneTypeId = model.PhoneTypeId;
+
+                if (_memberPhoneManager.Update(phone).IsSuccess)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Güncelleme başarısız oldu! Tekrar deneyiniz!'");
+                    return View(model);
+                }
+
             }
             catch (Exception ex)
             {

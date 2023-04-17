@@ -32,7 +32,7 @@
                     {
                         <option value="@item.Id">@item.Name</option>
                     }
-                    <option value="9999">Diğer</option>
+                    <option value="254">Diğer</option>
 
                 </select> <br />
 
@@ -100,9 +100,10 @@
                 ChangeInputDisable(selectedOption);
             }); // phonetypeselect change bitti
             function ChangeInputDisable(optionValue) {
-                if (optionValue == 9999) //combodan diğer'i seçti
+                if (optionValue == 254) //combodan diğer'i seçti
                 {
                     $("#anotherphonetype").prop('disabled', false); // input aktif
+
                 }
                 else {
                     $("#anotherphonetype").prop('disabled', true); // input pasif

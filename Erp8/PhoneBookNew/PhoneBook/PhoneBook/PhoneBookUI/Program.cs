@@ -1,4 +1,4 @@
-using AutoMapper.Extensions.ExpressionMapping;
+ï»¿using AutoMapper.Extensions.ExpressionMapping;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using PhoneBookBusinessLayer.EmailSenderBusiness;
@@ -20,14 +20,14 @@ builder.Services.AddDbContext<MyContext>(options =>
 });
 
 
-//CookieAuthentication ayarı eklendi
+//CookieAuthentication ayarÃ½ eklendi
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 
 builder.Services.AddAutoMapper(x =>
 {
     x.AddExpressionMapping();
-    x.AddProfile(typeof(Maps)); //Kimin kime dönüşeceğini Maps class'ı içinde tanımladık. Yaptığımız tanımlamayı ayarlara ekledik.
+    x.AddProfile(typeof(Maps)); //Kimin kime dÃ¶nÃ¼Ã¾eceÃ°ini Maps class'Ã½ iÃ§inde tanÃ½mladÃ½k. YaptÃ½Ã°Ã½mÃ½z tanÃ½mlamayÃ½ ayarlara ekledik.
 
 });
       
@@ -37,7 +37,7 @@ builder.Services.AddControllersWithViews();
 
 
 
-//interfacelerin işlerini gerçekleştirecek classları burada yaşam döngülerini tanımlamalıyız.
+//interfacelerin iÃ¾lerini gerÃ§ekleÃ¾tirecek classlarÃ½ burada yaÃ¾am dÃ¶ngÃ¼lerini tanÃ½mlamalÃ½yÃ½z.
 
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<IMemberManager, MemberManager>();
@@ -59,15 +59,29 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
-app.UseStaticFiles(); // wwwroot klasörünü görmesi için
+app.UseStaticFiles(); // wwwroot klasÃ¶rÃ¼nÃ¼ gÃ¶rmesi iÃ§in
 
-app.UseRouting(); // browserdaki url için /home/indexe gidebilmesi için
+app.UseRouting(); // browserdaki url iÃ§in /home/indexe gidebilmesi iÃ§in
 
-app.UseAuthentication(); // login ve logout işlemlerimiz için
-app.UseAuthorization(); // Yetkilendirme için 
+app.UseAuthentication(); // login ve logout iÃ¾lemlerimiz iÃ§in
+app.UseAuthorization(); // Yetkilendirme iÃ§in 
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    ); //area route default pattern
+});
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Dashboard}/{id?}"
+
+    );
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"); // route' default pattern vermek için
+    pattern: "{controller=Home}/{action=Index}/{id?}"); // route' default pattern vermek iÃ§in
 
-app.Run(); // uygulamayı çalıştırır
+app.Run(); // uygulamayÄ± Ã§alÄ±ÅŸtÄ±rÄ±r
