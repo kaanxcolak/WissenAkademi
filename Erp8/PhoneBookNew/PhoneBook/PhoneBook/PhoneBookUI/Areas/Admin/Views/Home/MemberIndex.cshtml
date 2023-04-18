@@ -12,7 +12,7 @@
         <h3 class="card-title">Üye Bilgileri</h3>
 
         <div class="card-tools">
-            <span class="badge badge-danger">@Model.Count Üye</span>
+            <span class="badge badge-danger">Toplam @Model.Count Üye</span>
             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
             </button>
@@ -25,13 +25,22 @@
             {
                 <li>
                     <img src="~/AdminLTE/dist/img/user1-128x128.jpg" alt="User Image">
-                    <a class="users-list-name" href="#">@item.Name @item.Surname.ToUpper()</a>
-                    <span class="users-list-date">
+                    <a class="users-list-name" href="#" style="font-weight:bold;">@item.Name @item.Surname.ToUpper()</a>
+                    <span class="users-list-date text-danger" >
                         @{
                             TimeSpan span = new TimeSpan();
                             span = DateTime.Now - item.CreatedDate;
-                            (span.TotalDays / 365).ToString();
-                        } gündür üye
+                            var days = Convert.ToInt32(span.TotalDays);
+                            string result = string.Empty;
+                            if (days == 0)
+                            {
+                                result = "Yeni Üye";
+                            }
+                            else
+                            {
+                                result = $"{days} Gündür Üye ";
+                            }
+                        } @result  gündür üye
                         
                         </span>
                 </li>
@@ -41,10 +50,7 @@
         </ul>
         <!-- /.users-list -->
     </div>
-    <!-- /.card-body -->
-    <div class="card-footer text-center">
-        <a href="javascript::">View All Users</a>
-    </div>
-    <!-- /.card-footer -->
+    <!-- /.card-body -->  
+   
 </div>
 <!--/.card -->

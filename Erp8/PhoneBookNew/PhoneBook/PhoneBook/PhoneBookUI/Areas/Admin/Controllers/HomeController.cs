@@ -84,7 +84,7 @@ namespace PhoneBookUI.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Route("m")]
+        [Route("uye")]
         public IActionResult MemberIndex()
         {
             try
