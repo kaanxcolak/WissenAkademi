@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace PhoneBookEntityLayer.ViewModels
 {
@@ -34,6 +36,7 @@ namespace PhoneBookEntityLayer.ViewModels
         public bool IsRemoved { get; set; }
         public string? ForgetPasswordToken { get; set; }
         public string? Picture { get; set; }
+        public IFormFile? UploadPicture { get; set; }  
 
     }
 }
