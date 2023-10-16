@@ -86,6 +86,240 @@ namespace TelefonUygulaması
             kisiler.Add(new Kisi(name, surname, phone_number));
             Console.WriteLine("Ekleme işlemi başarılı");
         }
+        public void DeleteNo()
+        {
+            string name = "";
+            string surname = "";
+            bool nameIsValid = false;
+            bool surnameIsValid = false;
+            while (!nameIsValid || !surnameIsValid)
+            {
+                if (!nameIsValid)
+                {
+                    Console.Write("Numarasını silmek istediğiniz kişinin adını giriniz: ");
+                    name = Console.ReadLine().Trim();
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        Console.WriteLine("İsim boş bırakılamaz");
+                    }
+                    else
+                    {
+                        nameIsValid = true;
+                    }
+                }
+                else if (!surnameIsValid)
+                {
+                    Console.Write("Numarasını silmek istediğiniz kişinin soyadını giriniz: ");
+                    surname = Console.ReadLine().Trim();
+                    if (string.IsNullOrEmpty(surname))
+                    {
+                        Console.WriteLine("Soyad boş bırakılamaz");
+                    }
+                    else
+                    {
+                        surnameIsValid = true;
+                    }
+                }
+            }
+            var result = kisiler.Find(x => x.Name == name && x.Surname == surname);
+            if (result != null)
+            {
+                kisiler.Remove(result);
+                Console.WriteLine("Kişi başarıyla listenizden silindi");
+            }
+            else
+            {
+                Console.WriteLine("Kişi bulanamadı !");
+            }
+        }
+        public void List()
+        {
+            bool secimIsValid = false;
+            string secim = "";
+            Console.WriteLine("Rehberi Listele");
+            Console.WriteLine("****************");
+            while (!secimIsValid)
+            {
+                if (!secimIsValid)
+                {
+                    Console.WriteLine("A-Z listelemek için '1' \nZ-A listelemek için '2' seçiniz: ");
+                    secim = Console.ReadLine();
+                    if (string.IsNullOrEmpty(secim))
+                    {
+                        Console.WriteLine("Lütfen doğru seçim yapınız");
+                    }
+                    else
+                    {
+                        secimIsValid = true;
+                    }
+                }
+            }
+            if (secim == "1")
+            {
+                Console.WriteLine("Telefon Listesi");
+                Console.WriteLine("****************");
+                List<Kisi> sortedList = kisiler.OrderBy(x => x.Name).ToList();   // İsme göre A-Z
+                foreach (var item in sortedList)
+                {
+                    Console.WriteLine("Ad: " + item.Name);
+                    Console.WriteLine("Soyad: " + item.Surname);
+                    Console.WriteLine("Telefon numarası: " + item.PhoneNumber);
+                }
+            }
+            if (secim == "2")
+            {
+                Console.WriteLine("Telefon Listesi");
+                Console.WriteLine("****************");
+                List<Kisi> sortedList = kisiler.OrderByDescending(x => x.Name).ToList();   // İsme göre Z-A
+                foreach (var item in sortedList)
+                {
+                    Console.WriteLine("Ad: " + item.Name);
+                    Console.WriteLine("Soyad: " + item.Surname);
+                    Console.WriteLine("Telefon numarası: " + item.PhoneNumber);
+                }
+            }
+        }
+        public void Search()
+        {
+            Console.WriteLine("İsim ve soyisme göre arama yapmak için '1'\n" +
+                "Telefon numarasına göre arama yapmak için '2' seçiniz: ");
+            string secim = Console.ReadLine();
 
+            if (secim == "1")
+            {
+                Console.Write("İsim giriniz: ");
+                string name = Console.ReadLine();
+                Console.Write("Soyisim giriniz: ");
+                string surname = Console.ReadLine();
+
+                var result = kisiler.Find(x => x.Name == name && x.Surname == surname);
+                if (result != null)
+                {
+                    Console.Write(result.Name + " ");
+                    Console.Write(result.Surname + " ");
+                    Console.WriteLine(result.PhoneNumber);
+                }
+                else
+                {
+                    Console.WriteLine("Kişi bulunamadı");
+                }
+            }
+            else if (secim == "2")
+            {
+                Console.WriteLine("Telefon numarası giriniz:");
+                string no = Console.ReadLine();
+
+                var result = kisiler.Find(x => x.PhoneNumber == no); //LINQ Expression
+                if (result != null)
+                {
+                    Console.WriteLine(result.Name);
+                    Console.WriteLine(result.Surname);
+                    Console.WriteLine(result.PhoneNumber);
+                }
+                else
+                { Console.WriteLine("Kişi bulunamadı"); }
+            }
+        }
+        public void UpdateNo()
+        {
+            string name = "";
+            string surname = "";
+            string phoneNumber = "";
+            bool nameIsValid = false;
+            bool surnameIsValid = false;
+            bool phoneIsValid = false;
+
+            while (!nameIsValid || !surnameIsValid || !phoneIsValid)
+            {
+                if (!nameIsValid)
+                {
+                    Console.Write("Numarasını güncellemek istediğiniz kişinin adını giriniz: ");
+                    name = Console.ReadLine().Trim();
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        Console.WriteLine("İsim boş bırakılamaz");
+                    }
+                    else
+                    {
+                        nameIsValid = true;
+                    }
+                }
+                else if (!surnameIsValid)
+                {
+                    Console.Write("Numarasını güncellemek istediğiniz kişinin soyadını giriniz: ");
+                    surname = Console.ReadLine().Trim();
+                    if (string.IsNullOrEmpty(surname))
+                    {
+                        Console.WriteLine("Soyad boş bırakılamaz");
+                    }
+                    else
+                    {
+                        surnameIsValid = true;
+                    }
+                }
+                else if (!phoneIsValid)
+                {
+                    Console.Write("10 haneli telefon numaranızı giriniz: ");
+                    phoneNumber = Console.ReadLine().Trim();
+                    var result = kisiler.Find(x => x.PhoneNumber == phoneNumber);
+
+                    if (string.IsNullOrEmpty(phoneNumber))
+                    {
+                        Console.WriteLine("Uyarı !!!");
+                        Console.WriteLine("Telefon numarası boş geçilemez");
+                    }
+                    else if (phoneNumber.Length == 10)
+                    {
+                        //string türündeki telefon numarasını TryParse metodu ile long türüne çevirmeye çalışılır
+                        //Eğer çevrilemezse yapı false döner ve geçersiz telefon numarası uyarısı verir. 
+                        if (long.TryParse(phoneNumber, out long converted_no) == false)
+                        {
+                            Console.WriteLine("Geçersiz telefon numarası");
+                        }
+                    }
+                    else if (result != null)
+                    {
+                        Console.WriteLine("Kişi bulundu");
+                        Console.Write("Yeni telefon numarasını giriniz:");
+                        string new_no = Console.ReadLine();
+                        if (string.IsNullOrEmpty(new_no))
+                        {
+                            Console.WriteLine("Numara boş geçilemez !");
+                        }
+                        else if (new_no.Length == 10)
+                        {
+                            if (long.TryParse(phoneNumber, out long converted_no) == false)
+                            {
+                                Console.WriteLine("Geçersiz telefon numarası");
+                            }
+                            else
+                            {
+                                var sonuc = kisiler.Find(x => x.PhoneNumber == phoneNumber);
+                                sonuc.PhoneNumber = new_no;
+                                Console.WriteLine("Güncelleme başarıyla gerçekleştirildi");
+                                phoneIsValid = true;
+                            }
+                        }
+                        else { Console.WriteLine("Geçersiz telefon numarası!"); }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Kişi bulunamadı. Lütfen bir seçim yapınız");
+                        Console.WriteLine("Güncellenemyi sonlandırmak için :'1'\n" +
+                                          "Yeniden denemek için:           :'2'");
+                        string secim = Console.ReadLine();
+                        if (secim == "1")
+                        {
+                            break;
+                        }
+                        else if (secim != "2")
+                        {
+                            Console.WriteLine("Hatalı giriş yaptınız");
+                        }
+                    }
+                }
+            }
+        }
     }
 }
+
